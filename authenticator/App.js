@@ -5,8 +5,9 @@ import {
   NavigationActions
 } from 'react-navigation'
 import { BackHandler } from 'react-native'
-import { combineReducers, createStore } from 'redux'
+import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
 import HomeScreen from './src/components/pages/Home'
 import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
@@ -65,7 +66,7 @@ const mapStateToProps = state => ({
 
 const AppWithNavigationState = connect(mapStateToProps)(ReduxNavigation)
 
-const store = createStore(appReducer)
+const store = createStore(appReducer, applyMiddleware(thunk))
 
 export default class Root extends React.Component {
   render() {
