@@ -21,7 +21,7 @@ export const validateUser = ({ userId, email }) => {
   return dispatch => {
     dispatch({ type: CREDENTIALS_PENDING })
 
-    fetch('http://localhost:8080/validar_usuario_authenticator', {
+    fetch('http://192.168.0.101:8080/validar_usuario_authenticator', {
       method: 'POST',
       body: JSON.stringify({
         user_id: userId,
@@ -33,7 +33,21 @@ export const validateUser = ({ userId, email }) => {
       credentials: 'same-origin'
     })
       .then(res => res.json())
-      .then(console.log)
-      .catch(console.log)
+      .then(res => {
+        if (res.erro) {
+          return validateUserFail(dispatch, res.erro)
+        }
+
+        return validateUserSuccess(dispatch, res)
+      })
+      .catch(() => validateUserFail(dispatch, 'Ocorreu um erro inesperado.'))
   }
+}
+
+const validateUserSuccess = (dispatch, user) => {
+  dispatch({ type: CREDENTIALS_SUCCESS, payload: user })
+}
+
+const validateUserFail = (dispatch, error) => {
+  dispatch({ type: CREDENTIALS_FAIL, payload: error })
 }
