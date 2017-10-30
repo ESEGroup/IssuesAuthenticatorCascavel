@@ -12,6 +12,8 @@ import thunk from 'redux-thunk'
 import HomeScreen from './src/components/pages/Home'
 import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
 
+import credentialsReducer from './src/reducers/credentialsReducer'
+
 const AppNavigator = StackNavigator(
   {
     Home: { screen: HomeScreen },
@@ -33,7 +35,8 @@ const navReducer = (state = initialState, action) => {
 }
 
 const appReducer = combineReducers({
-  nav: navReducer
+  nav: navReducer,
+  credentials: credentialsReducer
 })
 
 class ReduxNavigation extends React.Component {
