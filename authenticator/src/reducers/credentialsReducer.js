@@ -3,7 +3,9 @@ import {
   CREDENTIALS_EMAIL_CHANGED,
   CREDENTIALS_PENDING,
   CREDENTIALS_SUCCESS,
-  CREDENTIALS_FAIL
+  CREDENTIALS_FAIL,
+  CREDENTIALS_INVALID_EMAIL,
+  CREDENTIALS_INVALID_USER_ID
 } from '../actions/types'
 
 const INITIAL_STATE = {
@@ -26,6 +28,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, error: action.payload, password: '', loading: false }
     case CREDENTIALS_PENDING:
       return { ...state, loading: true, error: '' }
+    case CREDENTIALS_INVALID_EMAIL:
+      return { ...state, error: action.payload }
+    case CREDENTIALS_INVALID_USER_ID:
+      return { ...state, error: action.payload }
     default:
       return state
   }

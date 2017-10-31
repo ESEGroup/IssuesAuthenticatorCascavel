@@ -3,7 +3,9 @@ import {
   CREDENTIALS_EMAIL_CHANGED,
   CREDENTIALS_PENDING,
   CREDENTIALS_SUCCESS,
-  CREDENTIALS_FAIL
+  CREDENTIALS_FAIL,
+  CREDENTIALS_INVALID_EMAIL,
+  CREDENTIALS_INVALID_USER_ID
 } from './types'
 
 export const userIdChanged = text => {
@@ -43,6 +45,16 @@ export const validateUser = ({ userId, email }) => {
       .catch(() => validateUserFail(dispatch, 'Ocorreu um erro inesperado.'))
   }
 }
+
+export const invalidEmail = () => ({
+  type: CREDENTIALS_INVALID_EMAIL,
+  payload: 'Endereço de email inválido.'
+})
+
+export const invalidUserId = () => ({
+  type: CREDENTIALS_INVALID_USER_ID,
+  payload: 'Identificador inválido.'
+})
 
 const validateUserSuccess = (dispatch, user) => {
   dispatch({ type: CREDENTIALS_SUCCESS, payload: user })

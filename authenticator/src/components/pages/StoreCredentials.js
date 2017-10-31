@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import isEmail from 'validator/lib/isEmail'
 
 import headerConfig from '../configs/header'
 import Card from '../common/Card'
@@ -12,7 +13,9 @@ import Spinner from '../common/Spinner'
 import {
   userIdChanged,
   emailChanged,
-  validateUser
+  validateUser,
+  invalidEmail,
+  invalidUserId
 } from '../../actions/credentialsActions'
 
 class StoreCredentials extends Component {
@@ -28,6 +31,8 @@ class StoreCredentials extends Component {
 
   onButtonPress() {
     const { userId, email } = this.props
+    if (!userId) return this.props.invalidUserId()
+    if (!isEmail(email)) return this.props.invalidEmail()
 
     this.props.validateUser({ userId, email })
   }
@@ -77,7 +82,9 @@ class StoreCredentials extends Component {
 
         <CardSection>{this.renderButton()}</CardSection>
 
-        <Text style={errorText}>{this.props.error}</Text>
+        <Text style={errorText}>
+          {this.props.error ? `${this.props.error}\nTente novamente.` : ''}
+        </Text>
       </Card>
     )
   }
@@ -135,5 +142,7 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   userIdChanged,
   emailChanged,
-  validateUser
+  validateUser,
+  invalidEmail,
+  invalidUserId
 })(StoreCredentials)
