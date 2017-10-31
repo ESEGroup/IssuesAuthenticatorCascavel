@@ -10,7 +10,7 @@ import {
   CREDENTIALS_FETCH_INITIAL_STATE
 } from '../actions/types'
 
-import { getCache } from '../utils'
+import { getFromStorage } from '../utils'
 import { AsyncStorage } from 'react-native'
 
 const INITIAL_STATE = {

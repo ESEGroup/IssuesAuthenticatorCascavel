@@ -10,7 +10,7 @@ import {
   CREDENTIALS_FETCH_INITIAL_STATE
 } from './types'
 
-import { getCache } from '../utils'
+import { getFromStorage } from '../utils'
 
 export const userIdChanged = text => {
   return { type: CREDENTIALS_USER_ID_CHANGED, payload: text }
@@ -66,7 +66,7 @@ export const getInitialState = () => {
       type: CREDENTIALS_FETCH_INITIAL_STATE
     })
 
-    getCache('userCredentials')
+    getFromStorage('userCredentials')
       .then(user =>
         dispatch({
           type: CREDENTIALS_FETCHED_INITIAL_STATE,
