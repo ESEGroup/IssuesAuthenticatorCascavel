@@ -1,9 +1,9 @@
 import {
   CREDENTIALS_USER_ID_CHANGED,
   CREDENTIALS_EMAIL_CHANGED,
-  CREDENTIALS_PENDING,
-  CREDENTIALS_SUCCESS,
-  CREDENTIALS_FAIL,
+  FETCH_USER_PENDING,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_FAIL,
   CREDENTIALS_INVALID_EMAIL,
   CREDENTIALS_INVALID_USER_ID,
   CREDENTIALS_FETCHED_INITIAL_STATE,
@@ -25,13 +25,13 @@ export const emailChanged = text => {
 
 export const validateUser = ({ userId, email }) => {
   return dispatch => {
-    dispatch({ type: CREDENTIALS_PENDING })
+    dispatch({ type: FETCH_USER_PENDING })
 
     fetch('http://192.168.0.101:8080/validar_usuario_authenticator', {
       method: 'POST',
       body: JSON.stringify({
-        user_id: userId,
-        email: email
+        userId,
+        email
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -80,9 +80,9 @@ export const getInitialState = () => {
 }
 
 const validateUserSuccess = (dispatch, user) => {
-  dispatch({ type: CREDENTIALS_SUCCESS, payload: user })
+  dispatch({ type: FETCH_USER_SUCCESS, payload: user })
 }
 
 const validateUserFail = (dispatch, error) => {
-  dispatch({ type: CREDENTIALS_FAIL, payload: error })
+  dispatch({ type: FETCH_USER_FAIL, payload: error })
 }

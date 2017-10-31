@@ -1,9 +1,9 @@
 import {
   CREDENTIALS_USER_ID_CHANGED,
   CREDENTIALS_EMAIL_CHANGED,
-  CREDENTIALS_PENDING,
-  CREDENTIALS_SUCCESS,
-  CREDENTIALS_FAIL,
+  FETCH_USER_PENDING,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_FAIL,
   CREDENTIALS_INVALID_EMAIL,
   CREDENTIALS_INVALID_USER_ID,
   CREDENTIALS_FETCHED_INITIAL_STATE,
@@ -27,12 +27,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, userId: action.payload }
     case CREDENTIALS_EMAIL_CHANGED:
       return { ...state, email: action.payload }
-    case CREDENTIALS_SUCCESS:
+    case FETCH_USER_SUCCESS:
       AsyncStorage.setItem('userCredentials', JSON.stringify(action.payload))
       return { ...state, ...INITIAL_STATE, user: action.payload }
-    case CREDENTIALS_FAIL:
+    case FETCH_USER_FAIL:
       return { ...state, error: action.payload, password: '', loading: false }
-    case CREDENTIALS_PENDING:
+    case FETCH_USER_PENDING:
       return { ...state, loading: true, error: '' }
     case CREDENTIALS_INVALID_EMAIL:
       return { ...state, error: action.payload }
