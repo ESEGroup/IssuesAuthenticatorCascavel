@@ -5,8 +5,13 @@ import {
   CREDENTIALS_SUCCESS,
   CREDENTIALS_FAIL,
   CREDENTIALS_INVALID_EMAIL,
-  CREDENTIALS_INVALID_USER_ID
+  CREDENTIALS_INVALID_USER_ID,
+  CREDENTIALS_FETCHED_INITIAL_STATE,
+  CREDENTIALS_FETCH_INITIAL_STATE
 } from '../actions/types'
+
+import { getCache } from '../utils'
+import { AsyncStorage } from 'react-native'
 
 const INITIAL_STATE = {
   userId: '',
@@ -23,6 +28,7 @@ export default (state = INITIAL_STATE, action) => {
     case CREDENTIALS_EMAIL_CHANGED:
       return { ...state, email: action.payload }
     case CREDENTIALS_SUCCESS:
+      AsyncStorage.setItem('userCredentials', JSON.stringify(action.payload))
       return { ...state, ...INITIAL_STATE, user: action.payload }
     case CREDENTIALS_FAIL:
       return { ...state, error: action.payload, password: '', loading: false }
@@ -32,6 +38,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, error: action.payload }
     case CREDENTIALS_INVALID_USER_ID:
       return { ...state, error: action.payload }
+    case CREDENTIALS_FETCHED_INITIAL_STATE:
+      return { ...state, fetchingInitialState: false, user: action.payload }
+    case CREDENTIALS_FETCH_INITIAL_STATE:
+      return { ...state, fetchingInitialState: true }
     default:
       return state
   }

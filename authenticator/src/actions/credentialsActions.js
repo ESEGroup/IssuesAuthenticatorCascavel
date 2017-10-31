@@ -5,8 +5,12 @@ import {
   CREDENTIALS_SUCCESS,
   CREDENTIALS_FAIL,
   CREDENTIALS_INVALID_EMAIL,
-  CREDENTIALS_INVALID_USER_ID
+  CREDENTIALS_INVALID_USER_ID,
+  CREDENTIALS_FETCHED_INITIAL_STATE,
+  CREDENTIALS_FETCH_INITIAL_STATE
 } from './types'
+
+import { getCache } from '../utils'
 
 export const userIdChanged = text => {
   return { type: CREDENTIALS_USER_ID_CHANGED, payload: text }
@@ -55,6 +59,25 @@ export const invalidUserId = () => ({
   type: CREDENTIALS_INVALID_USER_ID,
   payload: 'Identificador inválido.'
 })
+
+export const getInitialState = () => {
+  return dispatch => {
+    dispatch({
+      type: CREDENTIALS_FETCH_INITIAL_STATE
+    })
+
+    getCache('userCredentials')
+      .then(user =>
+        dispatch({
+          type: CREDENTIALS_FETCHED_INITIAL_STATE,
+          payload: user
+        })
+      )
+      .catch(() => {
+        dispatch({ type: CREDENTIALS_FETCHED_INITIAL_STATE, payload: null })
+      })
+  }
+}
 
 const validateUserSuccess = (dispatch, user) => {
   dispatch({ type: CREDENTIALS_SUCCESS, payload: user })

@@ -15,11 +15,16 @@ import {
   emailChanged,
   validateUser,
   invalidEmail,
-  invalidUserId
+  invalidUserId,
+  getInitialState
 } from '../../actions/credentialsActions'
 
 class StoreCredentials extends Component {
   static navigationOptions = headerConfig
+
+  componentWillMount() {
+    this.props.getInitialState()
+  }
 
   onUserIdChange(text) {
     this.props.userIdChanged(text)
@@ -56,6 +61,8 @@ class StoreCredentials extends Component {
   }
 
   render() {
+    if (this.props.fetchingInitialState) return null
+
     const { title, errorText } = styles
 
     return (
@@ -129,13 +136,20 @@ const buttonStyles = {
 }
 
 const mapStateToProps = state => {
-  const { userId, email, error, loading } = state.credentials
+  const {
+    userId,
+    email,
+    error,
+    loading,
+    fetchingInitialState
+  } = state.credentials
 
   return {
     userId,
     email,
     error,
-    loading
+    loading,
+    fetchingInitialState
   }
 }
 
@@ -144,5 +158,6 @@ export default connect(mapStateToProps, {
   emailChanged,
   validateUser,
   invalidEmail,
-  invalidUserId
+  invalidUserId,
+  getInitialState
 })(StoreCredentials)
