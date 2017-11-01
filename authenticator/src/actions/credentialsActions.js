@@ -7,7 +7,8 @@ import {
   CREDENTIALS_INVALID_EMAIL,
   CREDENTIALS_INVALID_USER_ID,
   CREDENTIALS_FETCHED_INITIAL_STATE,
-  CREDENTIALS_FETCH_INITIAL_STATE
+  CREDENTIALS_FETCH_INITIAL_STATE,
+  USER_STATE
 } from './types'
 
 import { getFromStorage } from '../utils'
@@ -66,7 +67,7 @@ export const getInitialState = () => {
       type: CREDENTIALS_FETCH_INITIAL_STATE
     })
 
-    getFromStorage('userCredentials')
+    getFromStorage(USER_STATE)
       .then(user =>
         dispatch({
           type: CREDENTIALS_FETCHED_INITIAL_STATE,
