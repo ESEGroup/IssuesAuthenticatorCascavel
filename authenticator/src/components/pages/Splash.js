@@ -19,11 +19,11 @@ class Splash extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.user) {
       setTimeout(() => {
-        resetNavigation('Home', this)
+        resetNavigation.call(this, 'Home')
       }, 2000)
     } else {
       setTimeout(() => {
-        resetNavigation('StoreCredentials', this)
+        resetNavigation.call(this, 'StoreCredentials')
       }, 2000)
     }
   }

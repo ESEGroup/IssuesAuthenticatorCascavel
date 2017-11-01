@@ -13,10 +13,10 @@ export const getFromStorage = async key => {
   }
 }
 
-export const resetNavigation = (targetRoute, ref) => {
+export function resetNavigation(targetRoute) {
   const resetAction = NavigationActions.reset({
     index: 0,
     actions: [NavigationActions.navigate({ routeName: targetRoute })]
   })
-  ref.props.navigation.dispatch(resetAction)
+  this.props.navigation.dispatch(resetAction)
 }

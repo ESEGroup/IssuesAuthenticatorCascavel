@@ -32,7 +32,7 @@ class StoreCredentials extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user) {
-      resetNavigation('Home', this)
+      resetNavigation.call(this, 'Home')
     }
   }
 
