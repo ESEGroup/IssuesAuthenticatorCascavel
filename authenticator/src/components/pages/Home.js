@@ -16,6 +16,8 @@ import Button from '../common/Button'
 import Spinner from '../common/Spinner'
 import SlideMenu from '../SlideMenu'
 
+import { registerUserEnter, registerUserLeave } from '../../actions/userActions'
+
 class Home extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
@@ -57,14 +59,22 @@ class Home extends Component {
     })
   }
 
-  onEnterButtonPress() {}
-  onLeaveButtonPress() {}
+  onEnterButtonPress() {
+    const { userId } = this.props
+
+    this.props.registerUserEnter(userId, 1)
+  }
+  onLeaveButtonPress() {
+    const { userId } = this.props
+
+    this.props.registerUserLeave(userId, 1)
+  }
 
   renderButton() {
     const { enter, leave } = styles.buttonStyles
 
     if (!this.props.isInsideLab) {
-      if (this.props.isLoadingEnter) {
+      if (this.props.isLoadingAuth) {
         return (
           <Spinner
             backgroundStyles={enter.background}
@@ -84,7 +94,7 @@ class Home extends Component {
       )
     }
 
-    if (this.props.isLoadingExit) {
+    if (this.props.isLoadingAuth) {
       return (
         <Spinner
           backgroundStyles={leave.background}
@@ -122,7 +132,7 @@ class Home extends Component {
           isMenuOpen={isSideMenuOpen}
         />
         <View style={textView}>
-          <Text>Olá, {userId}</Text>
+          <Text style={{ fontSize: 18 }}>Olá, {userId}</Text>
         </View>
 
         <View style={buttonView}>{this.renderButton()}</View>
@@ -193,12 +203,16 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  const { userId, isInsideLab } = state.user
+  const { userId, isInsideLab, isLoadingAuth } = state.user
 
   return {
     userId,
-    isInsideLab
+    isInsideLab,
+    isLoadingAuth
   }
 }
 
-export default connect(mapStateToProps, {})(Home)
+export default connect(mapStateToProps, {
+  registerUserEnter,
+  registerUserLeave
+})(Home)
