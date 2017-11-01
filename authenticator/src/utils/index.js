@@ -20,3 +20,7 @@ export function resetNavigation(targetRoute) {
   })
   this.props.navigation.dispatch(resetAction)
 }
+
+export const setInStorage = (key, data) => {
+  AsyncStorage.setItem(key, JSON.stringify(data))
+}
