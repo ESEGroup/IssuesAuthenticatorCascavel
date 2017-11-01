@@ -18,7 +18,11 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_USER_SUCCESS:
     case CREDENTIALS_FETCHED_INITIAL_STATE:
-      return { ...state, ...action.payload }
+      return {
+        ...state,
+        ...action.payload,
+        isInsideLab: action.payload ? action.payload.labs[0].present : false
+      }
     case USER_AUTH_PENDING:
       return { ...state, isLoadingAuth: true }
     case USER_AUTH_ENTER_SUCCESS:
