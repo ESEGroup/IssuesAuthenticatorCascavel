@@ -41,13 +41,31 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, isLoadingAuth: true }
 
     case USER_AUTH_ENTER_SUCCESS:
-      newState = { ...state, isLoadingAuth: false, isInsideLab: true }
+      newState = {
+        ...state,
+        isLoadingAuth: false,
+        isInsideLab: true,
+        labs: state.labs.map(lab => {
+          lab.present = lab.labId === state.selectedLabId
+
+          return lab
+        })
+      }
       setInStorage(USER_STATE, newState)
 
       return newState
 
     case USER_AUTH_LEAVE_SUCCESS:
-      newState = { ...state, isLoadingAuth: false, isInsideLab: false }
+      newState = {
+        ...state,
+        isLoadingAuth: false,
+        isInsideLab: false,
+        labs: state.labs.map(lab => {
+          lab.present = false
+
+          return lab
+        })
+      }
       setInStorage(USER_STATE, newState)
 
       return newState

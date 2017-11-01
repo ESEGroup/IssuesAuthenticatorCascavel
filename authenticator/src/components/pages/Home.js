@@ -64,14 +64,26 @@ class Home extends Component {
   }
 
   onEnterButtonPress() {
-    const { userId, selectedLabId } = this.props
+    const {
+      userId,
+      selectedLabId,
+      labs,
+      registerUserLeave,
+      registerUserEnter
+    } = this.props
 
-    this.props.registerUserEnter(userId, selectedLabId)
+    labs.filter(lab => lab.labId !== selectedLabId).forEach(lab => {
+      if (lab.present) {
+        registerUserLeave(userId, lab.labId)
+      }
+    })
+
+    registerUserEnter(userId, selectedLabId)
   }
   onLeaveButtonPress() {
-    const { userId, selectedLabId } = this.props
+    const { userId, selectedLabId, registerUserLeave } = this.props
 
-    this.props.registerUserLeave(userId, selectedLabId)
+    registerUserLeave(userId, selectedLabId)
   }
 
   renderButton() {
