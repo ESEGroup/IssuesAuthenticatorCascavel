@@ -20,7 +20,10 @@ import {
 } from '../../actions/credentialsActions'
 
 class StoreCredentials extends Component {
-  static navigationOptions = headerConfig
+  static navigationOptions = {
+    ...headerConfig,
+    headerLeft: null
+  }
 
   componentWillMount() {
     this.props.getInitialState()
@@ -69,7 +72,7 @@ class StoreCredentials extends Component {
   render() {
     if (this.props.fetchingInitialState) return null
 
-    const { title, errorText } = styles
+    const { title, errorText, cardSection } = styles
 
     return (
       <Card>
@@ -93,7 +96,7 @@ class StoreCredentials extends Component {
           />
         </CardSection>
 
-        <CardSection>{this.renderButton()}</CardSection>
+        <CardSection style={cardSection}>{this.renderButton()}</CardSection>
 
         <Text style={errorText}>
           {this.props.error ? `${this.props.error}\nTente novamente.` : ''}
@@ -107,12 +110,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     textAlign: 'center',
-    color: '#444'
+    color: '#444',
+    marginTop: 20,
+    marginBottom: 15,
+    fontWeight: 'bold'
   },
   errorText: {
     fontSize: 18,
     textAlign: 'center',
     color: 'red',
+    marginTop: 15
+  },
+  cardSection: {
     marginTop: 15
   }
 })
