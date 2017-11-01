@@ -9,6 +9,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 
+import SplashScreen from './src/components/pages/Splash'
 import HomeScreen from './src/components/pages/Home'
 import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
 
@@ -22,16 +23,17 @@ UIManager.setLayoutAnimationEnabledExperimental &&
 
 const AppNavigator = StackNavigator(
   {
+    Splash: { screen: SplashScreen },
     Home: { screen: HomeScreen },
     StoreCredentials: { screen: StoreCredentialsScreen }
   },
   {
-    initialRouteName: 'StoreCredentials'
+    initialRouteName: 'Splash'
   }
 )
 
 const initialState = AppNavigator.router.getStateForAction(
-  AppNavigator.router.getActionForPathAndParams('StoreCredentials')
+  AppNavigator.router.getActionForPathAndParams('Splash')
 )
 
 const navReducer = (state = initialState, action) => {
