@@ -18,6 +18,7 @@ import {
   invalidUserId,
   getInitialState
 } from '../../actions/credentialsActions'
+import { resetNavigation } from '../../utils'
 
 class StoreCredentials extends Component {
   static navigationOptions = {
@@ -31,7 +32,7 @@ class StoreCredentials extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user) {
-      this.props.navigation.navigate('Home')
+      resetNavigation('Home', this)
     }
   }
 

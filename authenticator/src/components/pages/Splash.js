@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
 
 import headerConfig from '../configs/header'
-
+import { resetNavigation } from '../../utils'
 import { getInitialState } from '../../actions/credentialsActions'
 
 class Splash extends Component {
@@ -19,13 +19,21 @@ class Splash extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.user) {
       setTimeout(() => {
-        this.props.navigation.navigate('Home')
+        resetNavigation('Home', this)
       }, 2000)
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate('StoreCredentials')
+        resetNavigation('StoreCredentials', this)
       }, 2000)
     }
+  }
+
+  resetNavigation(targetRoute) {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: targetRoute })]
+    })
+    this.props.navigation.dispatch(resetAction)
   }
 
   render() {
