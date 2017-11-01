@@ -4,10 +4,28 @@ import { connect } from 'react-redux'
 
 import headerConfig from '../configs/header'
 
+import { getInitialState } from '../../actions/credentialsActions'
+
 class Splash extends Component {
   static navigationOptions = {
     ...headerConfig,
     header: null
+  }
+
+  componentWillMount() {
+    this.props.getInitialState()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.user) {
+      setTimeout(() => {
+        this.props.navigation.navigate('Home')
+      }, 2000)
+    } else {
+      setTimeout(() => {
+        this.props.navigation.navigate('StoreCredentials')
+      }, 2000)
+    }
   }
 
   render() {
@@ -44,4 +62,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Splash
+const mapStateToProps = state => {
+  const { user } = state.credentials
+
+  return { user }
+}
+
+export default connect(mapStateToProps, { getInitialState })(Splash)
