@@ -4,7 +4,7 @@ import {
   addNavigationHelpers,
   NavigationActions
 } from 'react-navigation'
-import { BackHandler } from 'react-native'
+import { BackHandler, NativeModules } from 'react-native'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
 import thunk from 'redux-thunk'
@@ -13,6 +13,12 @@ import HomeScreen from './src/components/pages/Home'
 import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
 
 import credentialsReducer from './src/reducers/credentialsReducer'
+import userReducer from './src/reducers/userReducer'
+
+const { UIManager } = NativeModules
+
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true)
 
 const AppNavigator = StackNavigator(
   {
@@ -36,7 +42,8 @@ const navReducer = (state = initialState, action) => {
 
 const appReducer = combineReducers({
   nav: navReducer,
-  credentials: credentialsReducer
+  credentials: credentialsReducer,
+  user: userReducer
 })
 
 class ReduxNavigation extends React.Component {
