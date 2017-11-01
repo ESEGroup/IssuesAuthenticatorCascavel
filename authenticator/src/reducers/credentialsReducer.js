@@ -7,11 +7,11 @@ import {
   CREDENTIALS_INVALID_EMAIL,
   CREDENTIALS_INVALID_USER_ID,
   CREDENTIALS_FETCHED_INITIAL_STATE,
-  CREDENTIALS_FETCH_INITIAL_STATE
+  CREDENTIALS_FETCH_INITIAL_STATE,
+  USER_STATE
 } from '../actions/types'
 
-import { getFromStorage } from '../utils'
-import { AsyncStorage } from 'react-native'
+import { getFromStorage, setInStorage } from '../utils'
 
 const INITIAL_STATE = {
   userId: '',
@@ -27,8 +27,13 @@ export default (state = INITIAL_STATE, action) => {
     case CREDENTIALS_EMAIL_CHANGED:
       return { ...state, email: action.payload }
     case FETCH_USER_SUCCESS:
-      AsyncStorage.setItem('userCredentials', JSON.stringify(action.payload))
-      return { ...state, ...INITIAL_STATE, user: action.payload }
+      const newUser = {
+        ...action.payload,
+        selectedLabId: action.payload.labs[0].labId,
+        isInsideLab: action.payload.labs[0].present
+      }
+      setInStorage(USER_STATE, newUser)
+      return { ...state, ...INITIAL_STATE, user: newUser }
     case FETCH_USER_FAIL:
       return { ...state, error: action.payload, password: '', loading: false }
     case FETCH_USER_PENDING:
