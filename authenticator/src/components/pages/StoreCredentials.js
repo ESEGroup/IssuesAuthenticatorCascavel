@@ -26,6 +26,12 @@ class StoreCredentials extends Component {
     this.props.getInitialState()
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user) {
+      this.props.navigation.navigate('Home')
+    }
+  }
+
   onUserIdChange(text) {
     this.props.userIdChanged(text)
   }
@@ -141,7 +147,8 @@ const mapStateToProps = state => {
     email,
     error,
     loading,
-    fetchingInitialState
+    fetchingInitialState,
+    user
   } = state.credentials
 
   return {
@@ -149,7 +156,8 @@ const mapStateToProps = state => {
     email,
     error,
     loading,
-    fetchingInitialState
+    fetchingInitialState,
+    user
   }
 }
 
