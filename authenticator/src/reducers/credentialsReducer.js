@@ -17,8 +17,7 @@ const INITIAL_STATE = {
   userId: '',
   email: '',
   error: '',
-  loading: false,
-  user: null
+  loading: false
 }
 
 export default (state = INITIAL_STATE, action) => {
