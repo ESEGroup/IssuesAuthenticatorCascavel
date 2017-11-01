@@ -3,7 +3,8 @@ import {
   USER_AUTH_ENTER_SUCCESS,
   USER_AUTH_ENTER_FAIL,
   USER_AUTH_LEAVE_SUCCESS,
-  USER_AUTH_LEAVE_FAIL
+  USER_AUTH_LEAVE_FAIL,
+  USER_AUTH_CHANGE_SELECTED_LAB
 } from './types'
 
 export const registerUserEnter = (userId, labId) => {
@@ -56,6 +57,13 @@ export const registerUserLeave = (userId, labId) => {
         return userRegisterSuccess(dispatch, USER_AUTH_LEAVE_SUCCESS)
       })
       .catch(() => userRegisterFail(dispatch, USER_AUTH_LEAVE_FAIL))
+  }
+}
+
+export const changeSelectedLab = labId => {
+  return {
+    type: USER_AUTH_CHANGE_SELECTED_LAB,
+    payload: labId
   }
 }
 

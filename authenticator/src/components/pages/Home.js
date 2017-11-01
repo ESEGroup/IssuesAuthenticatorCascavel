@@ -16,7 +16,11 @@ import Button from '../common/Button'
 import Spinner from '../common/Spinner'
 import SlideMenu from '../SlideMenu'
 
-import { registerUserEnter, registerUserLeave } from '../../actions/userActions'
+import {
+  registerUserEnter,
+  registerUserLeave,
+  changeSelectedLab
+} from '../../actions/userActions'
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -41,8 +45,7 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      isSideMenuOpen: false,
-      selectedLabId: props.labs[0].labId
+      isSideMenuOpen: false
     }
   }
 
@@ -61,14 +64,14 @@ class Home extends Component {
   }
 
   onEnterButtonPress() {
-    const { userId } = this.props
+    const { userId, selectedLabId } = this.props
 
-    this.props.registerUserEnter(userId, 1)
+    this.props.registerUserEnter(userId, selectedLabId)
   }
   onLeaveButtonPress() {
-    const { userId } = this.props
+    const { userId, selectedLabId } = this.props
 
-    this.props.registerUserLeave(userId, 1)
+    this.props.registerUserLeave(userId, selectedLabId)
   }
 
   renderButton() {
@@ -116,9 +119,13 @@ class Home extends Component {
   }
 
   render() {
-    const { userId, labs } = this.props
-    const { isSideMenuOpen, selectedLabId } = this.state
+    const { userId, labs, selectedLabId, changeSelectedLab } = this.props
+    const { isSideMenuOpen } = this.state
     const { containerView, textView, buttonView, slideMenu } = styles
+
+    if (selectedLabId === 'no-user') return null
+
+    console.log(this.props)
 
     return (
       <View style={containerView}>
@@ -135,12 +142,49 @@ class Home extends Component {
           <View style={slideMenu.header}>
             <Text style={slideMenu.user}>{userId}</Text>
             <Text style={slideMenu.lab}>
-              {labs.filter(lab => lab.labId === selectedLabId)[0].name}
+              {labs.find(lab => lab.labId === selectedLabId).name}
             </Text>
           </View>
         </SlideMenu>
         <View style={textView}>
           <Text style={{ fontSize: 18 }}>Olá, {userId}</Text>
+          <Text style={{ fontSize: 16, marginTop: 10, marginBottom: 10 }}>
+            Selecione o laboratório:
+          </Text>
+
+          {labs.map(lab => {
+            return (
+              <TouchableOpacity
+                onPress={() => changeSelectedLab(lab.labId)}
+                key={lab.labId}
+                style={{
+                  padding: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}
+              >
+                <Icon
+                  name={
+                    lab.labId === selectedLabId
+                      ? 'radio-button-checked'
+                      : 'radio-button-unchecked'
+                  }
+                  size={20}
+                  color="#FF9F00"
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: '#444',
+                    fontWeight: lab.labId === selectedLabId ? 'bold' : 'normal',
+                    marginLeft: 5
+                  }}
+                >
+                  {lab.name}
+                </Text>
+              </TouchableOpacity>
+            )
+          })}
         </View>
 
         <View style={buttonView}>{this.renderButton()}</View>
@@ -229,17 +273,19 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  const { userId, isInsideLab, isLoadingAuth, labs } = state.user
+  const { userId, isInsideLab, isLoadingAuth, labs, selectedLabId } = state.user
 
   return {
     userId,
     isInsideLab,
     isLoadingAuth,
-    labs
+    labs,
+    selectedLabId
   }
 }
 
 export default connect(mapStateToProps, {
   registerUserEnter,
-  registerUserLeave
+  registerUserLeave,
+  changeSelectedLab
 })(Home)
