@@ -41,7 +41,8 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      isSideMenuOpen: false
+      isSideMenuOpen: false,
+      selectedLabId: props.labs[0].labId
     }
   }
 
@@ -115,22 +116,29 @@ class Home extends Component {
   }
 
   render() {
-    const { userId } = this.props
-    const { isSideMenuOpen } = this.state
-    const { containerView, textView, buttonView } = styles
+    const { userId, labs } = this.props
+    const { isSideMenuOpen, selectedLabId } = this.state
+    const { containerView, textView, buttonView, slideMenu } = styles
 
     return (
       <View style={containerView}>
         <SlideMenu
           style={{
             position: 'absolute',
-            height: 200,
+            height: 400,
             elevation: 10,
-            backgroundColor: 'pink',
-            width: 200
+            backgroundColor: '#ddd',
+            width: 300
           }}
           isMenuOpen={isSideMenuOpen}
-        />
+        >
+          <View style={slideMenu.header}>
+            <Text style={slideMenu.user}>{userId}</Text>
+            <Text style={slideMenu.lab}>
+              {labs.filter(lab => lab.labId === selectedLabId)[0].name}
+            </Text>
+          </View>
+        </SlideMenu>
         <View style={textView}>
           <Text style={{ fontSize: 18 }}>Olá, {userId}</Text>
         </View>
@@ -153,6 +161,24 @@ const styles = {
   },
   buttonView: {
     marginBottom: 60
+  },
+  slideMenu: {
+    header: {
+      height: 100,
+      backgroundColor: '#777',
+      paddingLeft: 20,
+      justifyContent: 'center'
+    },
+    user: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#fff',
+      marginBottom: 5
+    },
+    lab: {
+      fontSize: 14,
+      color: '#fff'
+    }
   },
   buttonStyles: {
     enter: {
@@ -203,12 +229,13 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  const { userId, isInsideLab, isLoadingAuth } = state.user
+  const { userId, isInsideLab, isLoadingAuth, labs } = state.user
 
   return {
     userId,
     isInsideLab,
-    isLoadingAuth
+    isLoadingAuth,
+    labs
   }
 }
 
