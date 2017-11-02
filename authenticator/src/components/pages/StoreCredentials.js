@@ -15,8 +15,7 @@ import {
   emailChanged,
   validateUser,
   invalidEmail,
-  invalidUserId,
-  getInitialState
+  invalidUserId
 } from '../../actions/credentialsActions'
 import { resetNavigation } from '../../utils'
 
@@ -24,10 +23,6 @@ class StoreCredentials extends Component {
   static navigationOptions = {
     ...headerConfig,
     headerLeft: null
-  }
-
-  componentWillMount() {
-    this.props.getInitialState()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -176,6 +171,5 @@ export default connect(mapStateToProps, {
   emailChanged,
   validateUser,
   invalidEmail,
-  invalidUserId,
-  getInitialState
+  invalidUserId
 })(StoreCredentials)
