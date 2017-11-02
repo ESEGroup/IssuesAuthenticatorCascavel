@@ -24,3 +24,7 @@ export function resetNavigation(targetRoute) {
 export const setInStorage = (key, data) => {
   AsyncStorage.setItem(key, JSON.stringify(data))
 }
+
+export const removeFromStorage = key => {
+  return AsyncStorage.removeItem(key)
+}
