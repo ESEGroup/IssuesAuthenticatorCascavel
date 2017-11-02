@@ -16,10 +16,14 @@ import Button from '../common/Button'
 import Spinner from '../common/Spinner'
 import SlideMenu from '../SlideMenu'
 
+import { USER_STATE } from '../../actions/types'
+import { resetNavigation, removeFromStorage } from '../../utils'
+
 import {
   registerUserEnter,
   registerUserLeave,
-  changeSelectedLab
+  changeSelectedLab,
+  deleteUserInfo
 } from '../../actions/userActions'
 
 class Home extends Component {
@@ -156,6 +160,27 @@ class Home extends Component {
             <Text style={slideMenu.lab}>
               {labs.find(lab => lab.labId === selectedLabId).name}
             </Text>
+          </View>
+
+          <View style={{ flex: 1, position: 'relative' }}>
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                paddingTop: 15,
+                paddingBottom: 15,
+                paddingLeft: 20,
+                paddingRight: 20
+              }}
+              onPress={() => {
+                removeFromStorage(USER_STATE).then(() => {
+                  deleteUserInfo()
+                  resetNavigation.call(this, 'StoreCredentials')
+                })
+              }}
+            >
+              <Text style={{ color: '#444' }}>Desassociar usuário</Text>
+            </TouchableOpacity>
           </View>
         </SlideMenu>
         <View style={textView}>
@@ -299,5 +324,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   registerUserEnter,
   registerUserLeave,
-  changeSelectedLab
+  changeSelectedLab,
+  deleteUserInfo
 })(Home)

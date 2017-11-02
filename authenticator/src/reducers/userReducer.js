@@ -7,14 +7,16 @@ import {
   USER_AUTH_LEAVE_SUCCESS,
   USER_AUTH_LEAVE_FAIL,
   USER_STATE,
-  USER_AUTH_CHANGE_SELECTED_LAB
+  USER_AUTH_CHANGE_SELECTED_LAB,
+  USER_AUTH_STATE_DELETE
 } from '../actions/types'
 
 import { setInStorage } from '../utils'
 
 const INITIAL_STATE = {
   error: '',
-  isLoadingAuth: false
+  isLoadingAuth: false,
+  labs: []
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,12 +24,15 @@ export default (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case FETCH_USER_SUCCESS:
-      return {
+      newState = {
         ...state,
         ...action.payload,
         isInsideLab: action.payload ? action.payload.labs[0].present : false,
         selectedLabId: action.payload ? action.payload.labs[0].labId : 0
       }
+      setInStorage(USER_STATE, newState)
+
+      return newState
 
     case CREDENTIALS_FETCHED_INITIAL_STATE:
       return {
@@ -94,6 +99,9 @@ export default (state = INITIAL_STATE, action) => {
       setInStorage(USER_STATE, newState)
 
       return newState
+
+    case USER_AUTH_STATE_DELETE:
+      return { ...INITIAL_STATE }
 
     default:
       return state

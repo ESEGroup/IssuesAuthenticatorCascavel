@@ -4,7 +4,8 @@ import {
   USER_AUTH_ENTER_FAIL,
   USER_AUTH_LEAVE_SUCCESS,
   USER_AUTH_LEAVE_FAIL,
-  USER_AUTH_CHANGE_SELECTED_LAB
+  USER_AUTH_CHANGE_SELECTED_LAB,
+  USER_AUTH_STATE_DELETE
 } from './types'
 
 export const registerUserEnter = (userId, labId) => {
@@ -65,6 +66,10 @@ export const changeSelectedLab = labId => {
     type: USER_AUTH_CHANGE_SELECTED_LAB,
     payload: labId
   }
+}
+
+export const deleteUserInfo = () => {
+  return { type: USER_AUTH_STATE_DELETE }
 }
 
 const userRegisterSuccess = (dispatch, type) => {
