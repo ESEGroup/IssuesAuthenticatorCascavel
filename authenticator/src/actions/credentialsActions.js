@@ -12,6 +12,7 @@ import {
 } from './types'
 
 import { getFromStorage } from '../utils'
+import { SERVER_URL } from '../config'
 
 export const userIdChanged = text => {
   return { type: CREDENTIALS_USER_ID_CHANGED, payload: text }
@@ -28,7 +29,7 @@ export const validateUser = ({ userId, email }) => {
   return dispatch => {
     dispatch({ type: FETCH_USER_PENDING })
 
-    fetch('http://192.168.0.101:8080/validar_usuario_authenticator', {
+    fetch(`${SERVER_URL}/validar_usuario_authenticator`, {
       method: 'POST',
       body: JSON.stringify({
         userId,

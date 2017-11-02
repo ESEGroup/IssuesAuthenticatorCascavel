@@ -8,11 +8,13 @@ import {
   USER_AUTH_STATE_DELETE
 } from './types'
 
+import { SERVER_URL } from '../config'
+
 export const registerUserEnter = (userId, labId) => {
   return dispatch => {
     dispatch({ type: USER_AUTH_PENDING })
 
-    fetch('http://192.168.0.101:8080/registrar_entrada_authenticator', {
+    fetch(`${SERVER_URL}/registrar_entrada_authenticator`, {
       method: 'POST',
       body: JSON.stringify({
         userId,
@@ -39,7 +41,7 @@ export const registerUserLeave = (userId, labId) => {
   return dispatch => {
     dispatch({ type: USER_AUTH_PENDING })
 
-    fetch('http://192.168.0.101:8080/registrar_saida_authenticator', {
+    fetch(`${SERVER_URL}/registrar_saida_authenticator`, {
       method: 'POST',
       body: JSON.stringify({
         userId,
