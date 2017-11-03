@@ -141,16 +141,16 @@ class Home extends Component {
 
     if (selectedLabId === 'no-user') return null
 
-    console.log(this.props)
-
     return (
       <View style={containerView}>
         <SlideMenu
           style={{
             position: 'absolute',
+            top: 0,
             height: 400,
             elevation: 10,
             backgroundColor: '#ddd',
+            zIndex: 10,
             width: 300
           }}
           isMenuOpen={isSideMenuOpen}
@@ -183,6 +183,7 @@ class Home extends Component {
             </TouchableOpacity>
           </View>
         </SlideMenu>
+
         <View style={textView}>
           <Text style={{ fontSize: 18 }}>Olá, {userId}</Text>
           <Text style={{ fontSize: 16, marginTop: 10, marginBottom: 10 }}>
