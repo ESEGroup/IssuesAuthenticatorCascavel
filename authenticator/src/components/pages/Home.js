@@ -139,8 +139,6 @@ class Home extends Component {
     const { isSideMenuOpen } = this.state
     const { containerView, textView, buttonView, slideMenu } = styles
 
-    if (selectedLabId === 'no-user') return null
-
     return (
       <View style={containerView}>
         <SlideMenu
