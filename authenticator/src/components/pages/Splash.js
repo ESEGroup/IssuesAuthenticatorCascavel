@@ -12,19 +12,21 @@ class Splash extends Component {
     header: null
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getInitialState()
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.user) {
-      setTimeout(() => {
-        resetNavigation.call(this, 'Home')
-      }, 2000)
-    } else {
-      setTimeout(() => {
-        resetNavigation.call(this, 'StoreCredentials')
-      }, 2000)
+    if (!this.props.fetchingInitialState) {
+      if (this.props.user) {
+        setTimeout(() => {
+          resetNavigation.call(this, 'Home')
+        }, 1500)
+      } else {
+        setTimeout(() => {
+          resetNavigation.call(this, 'StoreCredentials')
+        }, 1500)
+      }
     }
   }
 
@@ -71,9 +73,12 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  const { user } = state.credentials
+  const { user, fetchingInitialState } = state.credentials
 
-  return { user }
+  return {
+    user,
+    fetchingInitialState
+  }
 }
 
 export default connect(mapStateToProps, { getInitialState })(Splash)

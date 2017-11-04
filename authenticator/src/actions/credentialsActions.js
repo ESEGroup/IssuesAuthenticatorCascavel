@@ -6,7 +6,7 @@ import {
   FETCH_USER_FAIL,
   CREDENTIALS_INVALID_EMAIL,
   CREDENTIALS_INVALID_USER_ID,
-  CREDENTIALS_FETCHED_INITIAL_STATE,
+  CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS,
   CREDENTIALS_FETCH_INITIAL_STATE,
   USER_STATE
 } from './types'
@@ -29,17 +29,7 @@ export const validateUser = ({ userId, email }) => {
   return dispatch => {
     dispatch({ type: FETCH_USER_PENDING })
 
-    fetch(`${SERVER_URL}/validar_usuario_authenticator`, {
-      method: 'POST',
-      body: JSON.stringify({
-        userId,
-        email
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    })
+    fetchUser({ userId, email })
       .then(res => res.json())
       .then(res => {
         if (res.erro) {
@@ -69,14 +59,28 @@ export const getInitialState = () => {
     })
 
     getFromStorage(USER_STATE)
-      .then(user =>
+      .then(userString => {
+        if (userString) return JSON.parse(userString)
+
         dispatch({
-          type: CREDENTIALS_FETCHED_INITIAL_STATE,
-          payload: user
+          type: CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS,
+          payload: null
         })
-      )
+      })
+      .then(userStorage => fetchUser(userStorage))
+      .then(response => response.json())
+      .then(updatedUser => {
+        validateUserSuccess(dispatch, updatedUser)
+        dispatch({
+          type: CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS,
+          payload: updatedUser
+        })
+      })
       .catch(() => {
-        dispatch({ type: CREDENTIALS_FETCHED_INITIAL_STATE, payload: null })
+        dispatch({
+          type: CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS,
+          payload: null
+        })
       })
   }
 }
@@ -88,3 +92,16 @@ const validateUserSuccess = (dispatch, user) => {
 const validateUserFail = (dispatch, error) => {
   dispatch({ type: FETCH_USER_FAIL, payload: error })
 }
+
+const fetchUser = ({ userId, email }) =>
+  fetch(`${SERVER_URL}/validar_usuario_authenticator`, {
+    method: 'POST',
+    body: JSON.stringify({
+      userId,
+      email
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'same-origin'
+  })
