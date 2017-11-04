@@ -24,7 +24,7 @@ import {
   registerUserLeave,
   changeSelectedLab,
   deleteUserInfo
-} from '../../actions/userActions'
+} from '../../actions/user'
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => {

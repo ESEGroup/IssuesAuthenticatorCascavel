@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import headerConfig from '../configs/header'
 import { resetNavigation } from '../../utils'
-import { getInitialState } from '../../actions/splashActions'
+import { getInitialState } from '../../actions/splash'
 
 class Splash extends Component {
   static navigationOptions = {

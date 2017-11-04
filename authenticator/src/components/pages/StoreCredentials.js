@@ -16,7 +16,7 @@ import {
   validateUser,
   invalidEmail,
   invalidUserId
-} from '../../actions/credentialsActions'
+} from '../../actions/credentials'
 import { resetNavigation } from '../../utils'
 
 class StoreCredentials extends Component {
