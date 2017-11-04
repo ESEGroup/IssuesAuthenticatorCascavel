@@ -5,12 +5,9 @@ import {
   USER_AUTH_ENTER_FAIL,
   USER_AUTH_LEAVE_SUCCESS,
   USER_AUTH_LEAVE_FAIL,
-  USER_STATE,
   USER_AUTH_CHANGE_SELECTED_LAB,
   USER_AUTH_STATE_DELETE
 } from '../actions/types'
-
-import { setInStorage } from '../utils'
 
 const INITIAL_STATE = {
   error: '',
@@ -19,8 +16,6 @@ const INITIAL_STATE = {
 }
 
 export default (state = INITIAL_STATE, action) => {
-  let newState
-
   switch (action.type) {
     case FETCH_USER_SUCCESS:
       return {

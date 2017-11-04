@@ -5,11 +5,10 @@ import {
   FETCH_USER_SUCCESS,
   FETCH_USER_FAIL,
   CREDENTIALS_INVALID_EMAIL,
-  CREDENTIALS_INVALID_USER_ID,
-  USER_STATE
+  CREDENTIALS_INVALID_USER_ID
 } from './types'
 
-import { getFromStorage, fetchUser } from '../utils'
+import { fetchUser } from '../utils'
 
 export const userIdChanged = text => {
   return { type: CREDENTIALS_USER_ID_CHANGED, payload: text }

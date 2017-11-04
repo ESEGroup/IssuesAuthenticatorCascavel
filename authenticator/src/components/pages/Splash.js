@@ -12,11 +12,11 @@ class Splash extends Component {
     header: null
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getInitialState()
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     if (!this.props.loadingUser) {
       if (this.props.user) {
         setTimeout(() => {
@@ -30,15 +30,7 @@ class Splash extends Component {
     }
   }
 
-  resetNavigation(targetRoute) {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: targetRoute })]
-    })
-    this.props.navigation.dispatch(resetAction)
-  }
-
-  render() {
+  render () {
     const { container, image, text } = styles
 
     return (

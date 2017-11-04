@@ -18,7 +18,7 @@ export const getInitialState = () => {
       .then(userString => {
         if (userString) return JSON.parse(userString)
 
-        return Promise.reject()
+        return Promise.reject(new Error('No data'))
       })
       .then(userStorage => fetchUser(userStorage))
       .then(response => response.json())
@@ -33,7 +33,9 @@ export const getInitialState = () => {
           payload: updatedUser
         })
       })
-      .catch(() => {
+      .catch(error => {
+        if (error) console.log(error)
+
         dispatch({
           type: SPLASH_GET_INITIAL_STATE_FAIL
         })

@@ -51,10 +51,10 @@ const appReducer = combineReducers({
 })
 
 class ReduxNavigation extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
   }
   onBackPress = () => {
@@ -66,7 +66,7 @@ class ReduxNavigation extends React.Component {
     return true
   }
 
-  render() {
+  render () {
     const { dispatch, nav } = this.props
     const navigation = addNavigationHelpers({ dispatch, state: nav })
 
@@ -83,7 +83,7 @@ const AppWithNavigationState = connect(mapStateToProps)(ReduxNavigation)
 const store = createStore(appReducer, applyMiddleware(thunk))
 
 export default class Root extends React.Component {
-  render() {
+  render () {
     return (
       <Provider store={store}>
         <AppWithNavigationState />

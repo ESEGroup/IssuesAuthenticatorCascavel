@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, View, Text } from 'react-native'
+import { TextInput, View } from 'react-native'
 
 const Input = ({
   secure,
@@ -9,7 +9,7 @@ const Input = ({
   onChangeText,
   keyboardType
 }) => {
-  const { inputStyle, containerStyle, labelStyle } = styles
+  const { inputStyle, containerStyle } = styles
 
   return (
     <View style={containerStyle}>
@@ -34,11 +34,6 @@ const styles = {
     fontSize: 14,
     lineHeight: 23,
     flex: 3
-  },
-  labelStyle: {
-    fontSize: 12,
-    paddingLeft: 10,
-    flex: 1
   },
   containerStyle: {
     height: 40,

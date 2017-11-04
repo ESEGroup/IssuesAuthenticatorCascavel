@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import {
-  Animated,
   View,
   Text,
-  StyleSheet,
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import headerConfig from '../configs/header'
-import Card from '../common/Card'
-import CardSection from '../common/CardSection'
 import Button from '../common/Button'
 import Spinner from '../common/Spinner'
 import SlideMenu from '../SlideMenu'
@@ -35,9 +31,9 @@ class Home extends Component {
       headerLeft: (
         <TouchableOpacity onPress={() => params.handleOpenSideMenu()}>
           <Icon
-            name="menu"
+            name='menu'
             size={30}
-            color="#fff"
+            color='#fff'
             style={{ marginLeft: 10, marginRight: 0 }}
           />
         </TouchableOpacity>
@@ -45,7 +41,7 @@ class Home extends Component {
     }
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -53,13 +49,13 @@ class Home extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.navigation.setParams({
       handleOpenSideMenu: this.openSideMenu.bind(this)
     })
   }
 
-  openSideMenu() {
+  openSideMenu () {
     const isSideMenuOpen = this.state.isSideMenuOpen
 
     this.setState({
@@ -67,7 +63,7 @@ class Home extends Component {
     })
   }
 
-  onEnterButtonPress() {
+  onEnterButtonPress () {
     const {
       userId,
       selectedLabId,
@@ -84,13 +80,13 @@ class Home extends Component {
 
     registerUserEnter(userId, selectedLabId)
   }
-  onLeaveButtonPress() {
+  onLeaveButtonPress () {
     const { userId, selectedLabId, registerUserLeave } = this.props
 
     registerUserLeave(userId, selectedLabId)
   }
 
-  renderButton() {
+  renderButton () {
     const { enter, leave } = styles.buttonStyles
 
     if (!this.props.isInsideLab) {
@@ -134,7 +130,7 @@ class Home extends Component {
     )
   }
 
-  render() {
+  render () {
     const {
       userId,
       labs,
@@ -214,7 +210,7 @@ class Home extends Component {
                       : 'radio-button-unchecked'
                   }
                   size={20}
-                  color="#FF9F00"
+                  color='#FF9F00'
                 />
                 <Text
                   style={{
