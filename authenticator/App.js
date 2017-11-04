@@ -13,9 +13,9 @@ import SplashScreen from './src/components/pages/Splash'
 import HomeScreen from './src/components/pages/Home'
 import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
 
-import credentialsReducer from './src/reducers/credentialsReducer'
-import userReducer from './src/reducers/userReducer'
-import splashReducer from './src/reducers/splashReducer'
+import credentialsReducer from './src/reducers/credentials'
+import userReducer from './src/reducers/user'
+import splashReducer from './src/reducers/splash'
 
 const { UIManager } = NativeModules
 
