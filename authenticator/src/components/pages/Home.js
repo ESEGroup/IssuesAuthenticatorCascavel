@@ -135,9 +135,17 @@ class Home extends Component {
   }
 
   render() {
-    const { userId, labs, selectedLabId, changeSelectedLab } = this.props
+    const {
+      userId,
+      labs,
+      selectedLabId,
+      changeSelectedLab,
+      deleteUserInfo
+    } = this.props
     const { isSideMenuOpen } = this.state
     const { containerView, textView, buttonView, slideMenu } = styles
+
+    if (!labs || !userId) return null
 
     return (
       <View style={containerView}>

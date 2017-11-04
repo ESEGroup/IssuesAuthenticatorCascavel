@@ -66,8 +66,6 @@ class StoreCredentials extends Component {
   }
 
   render() {
-    if (this.props.fetchingInitialState) return null
-
     const { title, errorText, cardSection } = styles
 
     return (
@@ -147,21 +145,13 @@ const buttonStyles = {
 }
 
 const mapStateToProps = state => {
-  const {
-    userId,
-    email,
-    error,
-    loading,
-    fetchingInitialState,
-    user
-  } = state.credentials
+  const { userId, email, error, loading, user } = state.credentials
 
   return {
     userId,
     email,
     error,
     loading,
-    fetchingInitialState,
     user
   }
 }
