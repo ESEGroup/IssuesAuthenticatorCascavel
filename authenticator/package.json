@@ -5,10 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "android-linux":
-      "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
-    "build-apk":
-      "cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/app-release.apk ../../releases/current/app-release.apk"
+    "android-linux": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
+    "build-apk": "cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/app-release.apk ../../releases/current/app-release.apk"
   },
   "dependencies": {
     "react": "16.0.0-beta.5",
@@ -22,9 +20,19 @@
     "validator": "^9.1.1"
   },
   "devDependencies": {
+    "babel-eslint": "^8.0.1",
     "babel-jest": "21.2.0",
     "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-jsx": "^4.0.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
     "jest": "21.2.1",
+    "prettier-eslint": "^8.2.1",
     "react-test-renderer": "16.0.0-beta.5"
   },
   "jest": {
