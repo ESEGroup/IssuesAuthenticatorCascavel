@@ -15,6 +15,7 @@ import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
 
 import credentialsReducer from './src/reducers/credentialsReducer'
 import userReducer from './src/reducers/userReducer'
+import splashReducer from './src/reducers/splashReducer'
 
 const { UIManager } = NativeModules
 
@@ -45,7 +46,8 @@ const navReducer = (state = initialState, action) => {
 const appReducer = combineReducers({
   nav: navReducer,
   credentials: credentialsReducer,
-  user: userReducer
+  user: userReducer,
+  splash: splashReducer
 })
 
 class ReduxNavigation extends React.Component {

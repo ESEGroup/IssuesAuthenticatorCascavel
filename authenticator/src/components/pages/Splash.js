@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import headerConfig from '../configs/header'
 import { resetNavigation } from '../../utils'
-import { getInitialState } from '../../actions/credentialsActions'
+import { getInitialState } from '../../actions/splashActions'
 
 class Splash extends Component {
   static navigationOptions = {
@@ -17,7 +17,7 @@ class Splash extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.props.fetchingInitialState) {
+    if (!this.props.loadingUser) {
       if (this.props.user) {
         setTimeout(() => {
           resetNavigation.call(this, 'Home')
@@ -73,11 +73,11 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  const { user, fetchingInitialState } = state.credentials
+  const { user, loadingUser } = state.splash
 
   return {
     user,
-    fetchingInitialState
+    loadingUser
   }
 }
 

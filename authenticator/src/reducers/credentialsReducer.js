@@ -6,8 +6,6 @@ import {
   FETCH_USER_FAIL,
   CREDENTIALS_INVALID_EMAIL,
   CREDENTIALS_INVALID_USER_ID,
-  CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS,
-  CREDENTIALS_FETCH_INITIAL_STATE,
   USER_STATE,
   USER_AUTH_STATE_DELETE
 } from '../actions/types'
@@ -45,12 +43,6 @@ export default (state = INITIAL_STATE, action) => {
 
     case CREDENTIALS_INVALID_USER_ID:
       return { ...state, error: action.payload }
-
-    case CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS:
-      return { ...state, fetchingInitialState: false, user: action.payload }
-
-    case CREDENTIALS_FETCH_INITIAL_STATE:
-      return { ...state, fetchingInitialState: true }
 
     case USER_AUTH_STATE_DELETE:
       return { ...INITIAL_STATE }

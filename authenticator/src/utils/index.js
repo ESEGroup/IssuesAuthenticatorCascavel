@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 
+import { SERVER_URL } from '../config'
+
 export const getFromStorage = key => {
   return AsyncStorage.getItem(key)
 }
@@ -20,3 +22,16 @@ export const setInStorage = (key, data) => {
 export const removeFromStorage = key => {
   return AsyncStorage.removeItem(key)
 }
+
+export const fetchUser = ({ userId, email }) =>
+  fetch(`${SERVER_URL}/validar_usuario_authenticator`, {
+    method: 'POST',
+    body: JSON.stringify({
+      userId,
+      email
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'same-origin'
+  })
