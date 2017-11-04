@@ -33,7 +33,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...INITIAL_STATE, user: action.payload }
 
     case FETCH_USER_FAIL:
-      return { ...state, error: action.payload, password: '', loading: false }
+      return { ...state, error: action.payload, loading: false }
 
     case FETCH_USER_PENDING:
       return { ...state, loading: true, error: '' }

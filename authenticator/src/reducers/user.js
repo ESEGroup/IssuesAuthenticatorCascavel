@@ -26,8 +26,8 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         ...action.payload,
-        isInsideLab: action.payload ? action.payload.labs[0].present : false,
-        selectedLabId: action.payload ? action.payload.labs[0].labId : 0
+        isInsideLab: action.payload.labs[0].present,
+        selectedLabId: action.payload.labs[0].labId
       }
 
     case USER_AUTH_PENDING:
