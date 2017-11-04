@@ -1,16 +1,8 @@
 import { AsyncStorage } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 
-export const getFromStorage = async key => {
-  try {
-    const value = await AsyncStorage.getItem(key)
-
-    if (value) return JSON.parse(value)
-
-    return null
-  } catch (error) {
-    return null
-  }
+export const getFromStorage = key => {
+  return AsyncStorage.getItem(key)
 }
 
 export function resetNavigation(targetRoute) {
