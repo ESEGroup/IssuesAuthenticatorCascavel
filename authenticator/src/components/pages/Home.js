@@ -72,13 +72,11 @@ class Home extends Component {
       registerUserEnter
     } = this.props
 
-    labs.filter(lab => lab.labId !== selectedLabId).forEach(lab => {
-      if (lab.present) {
-        registerUserLeave(userId, lab.labId)
-      }
+    labs.filter(lab => lab.labId !== selectedLabId && lab.present).forEach(lab => {
+      registerUserLeave(userId, lab.labId)
     })
 
-    registerUserEnter(userId, selectedLabId)
+    setTimeout(() => { registerUserEnter(userId, selectedLabId) }, 200)
   }
   onLeaveButtonPress () {
     const { userId, selectedLabId, registerUserLeave } = this.props
@@ -88,9 +86,10 @@ class Home extends Component {
 
   renderButton () {
     const { enter, leave } = styles.buttonStyles
+    const { selectedLabId, loadingEnter, loadingLeave, labs } = this.props
 
-    if (!this.props.isInsideLab) {
-      if (this.props.isLoadingAuth) {
+    if (!labs.find(lab => lab.labId === selectedLabId).present) {
+      if (loadingEnter) {
         return (
           <Spinner
             backgroundStyles={enter.background}
@@ -110,7 +109,7 @@ class Home extends Component {
       )
     }
 
-    if (this.props.isLoadingAuth) {
+    if (loadingLeave) {
       return (
         <Spinner
           backgroundStyles={leave.background}
@@ -313,12 +312,12 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  const { userId, isInsideLab, isLoadingAuth, labs, selectedLabId } = state.user
+  const { userId, loadingEnter, loadingLeave, labs, selectedLabId } = state.user
 
   return {
     userId,
-    isInsideLab,
-    isLoadingAuth,
+    loadingEnter,
+    loadingLeave,
     labs,
     selectedLabId
   }

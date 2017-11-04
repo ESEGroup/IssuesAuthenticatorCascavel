@@ -1,8 +1,9 @@
 import {
   FETCH_USER_SUCCESS,
-  USER_AUTH_PENDING,
+  USER_AUTH_ENTER_PENDING,
   USER_AUTH_ENTER_SUCCESS,
   USER_AUTH_ENTER_FAIL,
+  USER_AUTH_LEAVE_PENDING,
   USER_AUTH_LEAVE_SUCCESS,
   USER_AUTH_LEAVE_FAIL,
   USER_AUTH_CHANGE_SELECTED_LAB,
@@ -11,7 +12,6 @@ import {
 
 const INITIAL_STATE = {
   error: '',
-  isLoadingAuth: false,
   labs: []
 }
 
@@ -25,14 +25,16 @@ export default (state = INITIAL_STATE, action) => {
         selectedLabId: action.payload.labs[0].labId
       }
 
-    case USER_AUTH_PENDING:
-      return { ...state, isLoadingAuth: true }
+    case USER_AUTH_ENTER_PENDING:
+      return { ...state, loadingEnter: true }
+
+    case USER_AUTH_LEAVE_PENDING:
+      return { ...state, loadingLeave: true }
 
     case USER_AUTH_ENTER_SUCCESS:
       return {
         ...state,
-        isLoadingAuth: false,
-        isInsideLab: true,
+        loadingEnter: false,
         labs: state.labs.map(lab => {
           lab.present = lab.labId === state.selectedLabId
 
@@ -43,10 +45,11 @@ export default (state = INITIAL_STATE, action) => {
     case USER_AUTH_LEAVE_SUCCESS:
       return {
         ...state,
-        isLoadingAuth: false,
-        isInsideLab: false,
+        loadingLeave: false,
         labs: state.labs.map(lab => {
-          lab.present = false
+          if (lab.labId === state.selectedLabId) {
+            lab.present = false
+          }
 
           return lab
         })
@@ -55,23 +58,21 @@ export default (state = INITIAL_STATE, action) => {
     case USER_AUTH_ENTER_FAIL:
       return {
         ...state,
-        isLoadingAuth: false,
+        loadingEnter: false,
         error: 'Ocorreu um erro no registro da entrada.'
       }
 
     case USER_AUTH_LEAVE_FAIL:
       return {
         ...state,
-        isLoadingAuth: false,
+        loadingLeave: false,
         error: 'Ocorreu um erro no registro da saída.'
       }
 
     case USER_AUTH_CHANGE_SELECTED_LAB:
       return {
         ...state,
-        selectedLabId: action.payload,
-        isInsideLab: state.labs.find(lab => lab.labId === action.payload)
-          .present
+        selectedLabId: action.payload
       }
 
     case USER_AUTH_STATE_DELETE:

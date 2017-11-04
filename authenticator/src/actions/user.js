@@ -1,7 +1,8 @@
 import {
-  USER_AUTH_PENDING,
+  USER_AUTH_ENTER_PENDING,
   USER_AUTH_ENTER_SUCCESS,
   USER_AUTH_ENTER_FAIL,
+  USER_AUTH_LEAVE_PENDING,
   USER_AUTH_LEAVE_SUCCESS,
   USER_AUTH_LEAVE_FAIL,
   USER_AUTH_CHANGE_SELECTED_LAB,
@@ -12,7 +13,7 @@ import { SERVER_URL } from '../config'
 
 export const registerUserEnter = (userId, labId) => {
   return dispatch => {
-    dispatch({ type: USER_AUTH_PENDING })
+    dispatch({ type: USER_AUTH_ENTER_PENDING })
 
     fetch(`${SERVER_URL}/registrar_entrada_authenticator`, {
       method: 'POST',
@@ -39,7 +40,7 @@ export const registerUserEnter = (userId, labId) => {
 
 export const registerUserLeave = (userId, labId) => {
   return dispatch => {
-    dispatch({ type: USER_AUTH_PENDING })
+    dispatch({ type: USER_AUTH_LEAVE_PENDING })
 
     fetch(`${SERVER_URL}/registrar_saida_authenticator`, {
       method: 'POST',
