@@ -1,6 +1,6 @@
 import {
   FETCH_USER_SUCCESS,
-  CREDENTIALS_FETCHED_INITIAL_STATE,
+  CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS,
   USER_AUTH_PENDING,
   USER_AUTH_ENTER_SUCCESS,
   USER_AUTH_ENTER_FAIL,
@@ -24,29 +24,18 @@ export default (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case FETCH_USER_SUCCESS:
-      newState = {
+      return {
         ...state,
         ...action.payload,
         isInsideLab: action.payload ? action.payload.labs[0].present : false,
         selectedLabId: action.payload ? action.payload.labs[0].labId : 0
-      }
-      setInStorage(USER_STATE, newState)
-
-      return newState
-
-    case CREDENTIALS_FETCHED_INITIAL_STATE:
-      return {
-        ...state,
-        ...action.payload,
-        isInsideLab: action.payload ? action.payload.isInsideLab : false,
-        selectedLabId: action.payload ? action.payload.selectedLabId : 0
       }
 
     case USER_AUTH_PENDING:
       return { ...state, isLoadingAuth: true }
 
     case USER_AUTH_ENTER_SUCCESS:
-      newState = {
+      return {
         ...state,
         isLoadingAuth: false,
         isInsideLab: true,
@@ -56,12 +45,9 @@ export default (state = INITIAL_STATE, action) => {
           return lab
         })
       }
-      setInStorage(USER_STATE, newState)
-
-      return newState
 
     case USER_AUTH_LEAVE_SUCCESS:
-      newState = {
+      return {
         ...state,
         isLoadingAuth: false,
         isInsideLab: false,
@@ -71,9 +57,6 @@ export default (state = INITIAL_STATE, action) => {
           return lab
         })
       }
-      setInStorage(USER_STATE, newState)
-
-      return newState
 
     case USER_AUTH_ENTER_FAIL:
       return {
@@ -90,15 +73,12 @@ export default (state = INITIAL_STATE, action) => {
       }
 
     case USER_AUTH_CHANGE_SELECTED_LAB:
-      newState = {
+      return {
         ...state,
         selectedLabId: action.payload,
         isInsideLab: state.labs.find(lab => lab.labId === action.payload)
           .present
       }
-      setInStorage(USER_STATE, newState)
-
-      return newState
 
     case USER_AUTH_STATE_DELETE:
       return { ...INITIAL_STATE }

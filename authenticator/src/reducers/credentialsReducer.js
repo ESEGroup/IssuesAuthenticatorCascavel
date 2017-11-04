@@ -6,13 +6,13 @@ import {
   FETCH_USER_FAIL,
   CREDENTIALS_INVALID_EMAIL,
   CREDENTIALS_INVALID_USER_ID,
-  CREDENTIALS_FETCHED_INITIAL_STATE,
+  CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS,
   CREDENTIALS_FETCH_INITIAL_STATE,
   USER_STATE,
   USER_AUTH_STATE_DELETE
 } from '../actions/types'
 
-import { getFromStorage, setInStorage } from '../utils'
+import { setInStorage } from '../utils'
 
 const INITIAL_STATE = {
   userId: '',
@@ -30,14 +30,9 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, email: action.payload }
 
     case FETCH_USER_SUCCESS:
-      const newUser = {
-        ...action.payload,
-        selectedLabId: action.payload.labs[0].labId,
-        isInsideLab: action.payload.labs[0].present
-      }
-      setInStorage(USER_STATE, newUser)
+      setInStorage(USER_STATE, action.payload)
 
-      return { ...state, ...INITIAL_STATE, user: newUser }
+      return { ...state, ...INITIAL_STATE, user: action.payload }
 
     case FETCH_USER_FAIL:
       return { ...state, error: action.payload, password: '', loading: false }
@@ -51,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
     case CREDENTIALS_INVALID_USER_ID:
       return { ...state, error: action.payload }
 
-    case CREDENTIALS_FETCHED_INITIAL_STATE:
+    case CREDENTIALS_FETCH_INITIAL_STATE_SUCCESS:
       return { ...state, fetchingInitialState: false, user: action.payload }
 
     case CREDENTIALS_FETCH_INITIAL_STATE:
