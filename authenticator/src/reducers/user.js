@@ -21,7 +21,6 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         ...action.payload,
-        isInsideLab: action.payload.labs[0].present,
         selectedLabId: action.payload.labs[0].labId
       }
 
@@ -36,7 +35,9 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loadingEnter: false,
         labs: state.labs.map(lab => {
-          lab.present = lab.labId === state.selectedLabId
+          if (lab.labId === action.payload) {
+            lab.present = true
+          }
 
           return lab
         })
@@ -47,7 +48,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loadingLeave: false,
         labs: state.labs.map(lab => {
-          if (lab.labId === state.selectedLabId) {
+          if (lab.labId === action.payload) {
             lab.present = false
           }
 

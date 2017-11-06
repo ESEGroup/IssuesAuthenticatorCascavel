@@ -15,7 +15,7 @@ export const registerUserEnter = (userId, labId) => {
   return dispatch => {
     dispatch({ type: USER_AUTH_ENTER_PENDING })
 
-    fetch(`${SERVER_URL}/registrar_entrada_authenticator`, {
+    return fetch(`${SERVER_URL}/registrar_entrada_authenticator`, {
       method: 'POST',
       body: JSON.stringify({
         userId,
@@ -29,12 +29,18 @@ export const registerUserEnter = (userId, labId) => {
       .then(res => res.json())
       .then(res => {
         if (res.erro) {
-          return userRegisterFail(dispatch, USER_AUTH_ENTER_FAIL)
+          userRegisterFail(dispatch, USER_AUTH_ENTER_FAIL, labId)
         }
 
-        return userRegisterSuccess(dispatch, USER_AUTH_ENTER_SUCCESS)
+        userRegisterSuccess(dispatch, USER_AUTH_ENTER_SUCCESS, labId)
+
+        return Promise.resolve('done')
       })
-      .catch(() => userRegisterFail(dispatch, USER_AUTH_ENTER_FAIL))
+      .catch(() => {
+        userRegisterFail(dispatch, USER_AUTH_ENTER_FAIL, labId)
+
+        return Promise.resolve('done')
+      })
   }
 }
 
@@ -42,7 +48,7 @@ export const registerUserLeave = (userId, labId) => {
   return dispatch => {
     dispatch({ type: USER_AUTH_LEAVE_PENDING })
 
-    fetch(`${SERVER_URL}/registrar_saida_authenticator`, {
+    return fetch(`${SERVER_URL}/registrar_saida_authenticator`, {
       method: 'POST',
       body: JSON.stringify({
         userId,
@@ -56,12 +62,17 @@ export const registerUserLeave = (userId, labId) => {
       .then(res => res.json())
       .then(res => {
         if (res.erro) {
-          return userRegisterFail(dispatch, USER_AUTH_LEAVE_FAIL)
+          userRegisterFail(dispatch, USER_AUTH_LEAVE_FAIL, labId)
         }
 
-        return userRegisterSuccess(dispatch, USER_AUTH_LEAVE_SUCCESS)
+        userRegisterSuccess(dispatch, USER_AUTH_LEAVE_SUCCESS, labId)
+        return Promise.resolve('done')
       })
-      .catch(() => userRegisterFail(dispatch, USER_AUTH_LEAVE_FAIL))
+      .catch(() => {
+        userRegisterFail(dispatch, USER_AUTH_LEAVE_FAIL, labId)
+
+        return Promise.resolve('done')
+      })
   }
 }
 
@@ -76,10 +87,10 @@ export const deleteUserInfo = () => {
   return { type: USER_AUTH_STATE_DELETE }
 }
 
-const userRegisterSuccess = (dispatch, type) => {
-  dispatch({ type })
+const userRegisterSuccess = (dispatch, type, payload) => {
+  dispatch({ type, payload })
 }
 
-const userRegisterFail = (dispatch, type) => {
-  dispatch({ type })
+const userRegisterFail = (dispatch, type, payload) => {
+  dispatch({ type, payload })
 }

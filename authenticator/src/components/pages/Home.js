@@ -72,11 +72,15 @@ class Home extends Component {
       registerUserEnter
     } = this.props
 
+    const leaving = []
     labs.filter(lab => lab.labId !== selectedLabId && lab.present).forEach(lab => {
-      registerUserLeave(userId, lab.labId)
+      leaving.push(registerUserLeave(userId, lab.labId))
     })
 
-    setTimeout(() => { registerUserEnter(userId, selectedLabId) }, 200)
+    Promise.all(leaving)
+      .then(() => {
+        registerUserEnter(userId, selectedLabId)
+      })
   }
   onLeaveButtonPress () {
     const { userId, selectedLabId, registerUserLeave } = this.props
