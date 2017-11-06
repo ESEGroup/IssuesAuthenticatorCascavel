@@ -53,6 +53,7 @@ export const registerUserLeave = (userId, labId) => {
       },
       credentials: 'same-origin'
     })
+      .then(res => res.json())
       .then(res => {
         if (res.erro) {
           return userRegisterFail(dispatch, USER_AUTH_LEAVE_FAIL)
