@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "android-linux": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
-    "build-apk": "cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/app-release.apk ../../releases/current/app-release.apk"
+    "build-apk": "cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/app-release.apk ../../releases/current/app-release.apk",
+    "eslint-fixall": "./node_modules/.bin/eslint --fix ."
   },
   "dependencies": {
     "react": "16.0.0-beta.5",
