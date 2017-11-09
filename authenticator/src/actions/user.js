@@ -9,23 +9,13 @@ import {
   USER_AUTH_STATE_DELETE
 } from './types'
 
-import { SERVER_URL } from '../config'
+import API from '../api'
 
 export const registerUserEnter = (userId, labId) => {
   return dispatch => {
     dispatch({ type: USER_AUTH_ENTER_PENDING })
 
-    return fetch(`${SERVER_URL}/registrar_entrada_authenticator`, {
-      method: 'POST',
-      body: JSON.stringify({
-        userId,
-        labId
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    })
+    return API.registerEnter({ userId, labId })
       .then(res => res.json())
       .then(res => {
         if (res.erro) {
@@ -48,17 +38,7 @@ export const registerUserLeave = (userId, labId) => {
   return dispatch => {
     dispatch({ type: USER_AUTH_LEAVE_PENDING })
 
-    return fetch(`${SERVER_URL}/registrar_saida_authenticator`, {
-      method: 'POST',
-      body: JSON.stringify({
-        userId,
-        labId
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    })
+    return API.registerExit({ userId, labId })
       .then(res => res.json())
       .then(res => {
         if (res.erro) {

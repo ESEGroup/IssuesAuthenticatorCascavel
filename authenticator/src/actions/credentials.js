@@ -8,7 +8,7 @@ import {
   CREDENTIALS_INVALID_USER_ID
 } from './types'
 
-import { fetchUser } from '../utils'
+import API from '../api'
 
 export const userIdChanged = text => {
   return { type: CREDENTIALS_USER_ID_CHANGED, payload: text }
@@ -25,7 +25,7 @@ export const validateUser = ({ userId, email }) => {
   return dispatch => {
     dispatch({ type: FETCH_USER_PENDING })
 
-    fetchUser({ userId, email })
+    API.fetchUser({ userId, email })
       .then(res => res.json())
       .then(res => {
         if (res.erro) {

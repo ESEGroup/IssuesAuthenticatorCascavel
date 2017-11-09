@@ -6,7 +6,8 @@ import {
   USER_STATE
 } from './types'
 
-import { fetchUser, getFromStorage } from '../utils'
+import API from '../api'
+import { getFromStorage } from '../utils'
 
 export const getInitialState = () => {
   return dispatch => {
@@ -20,7 +21,7 @@ export const getInitialState = () => {
 
         return Promise.reject(new Error('No data'))
       })
-      .then(userStorage => fetchUser(userStorage))
+      .then(userStorage => API.fetchUser(userStorage))
       .then(response => response.json())
       .then(updatedUser => {
         dispatch({
