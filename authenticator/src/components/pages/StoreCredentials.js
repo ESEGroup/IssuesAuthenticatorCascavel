@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import isEmail from 'validator/lib/isEmail'
 
@@ -16,7 +16,7 @@ import {
   validateUser,
   invalidEmail,
   invalidUserId
-} from '../../actions/credentialsActions'
+} from '../../actions/credentials'
 import { resetNavigation } from '../../utils'
 
 class StoreCredentials extends Component {
@@ -25,21 +25,21 @@ class StoreCredentials extends Component {
     headerLeft: null
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.user) {
       resetNavigation.call(this, 'Home')
     }
   }
 
-  onUserIdChange(text) {
+  onUserIdChange (text) {
     this.props.userIdChanged(text)
   }
 
-  onEmailChange(text) {
+  onEmailChange (text) {
     this.props.emailChanged(text)
   }
 
-  onButtonPress() {
+  onButtonPress () {
     const { userId, email } = this.props
     if (!userId) return this.props.invalidUserId()
     if (!isEmail(email)) return this.props.invalidEmail()
@@ -47,7 +47,7 @@ class StoreCredentials extends Component {
     this.props.validateUser({ userId, email })
   }
 
-  renderButton() {
+  renderButton () {
     const { text, background, spinner } = buttonStyles
 
     if (this.props.loading) {
@@ -65,9 +65,7 @@ class StoreCredentials extends Component {
     )
   }
 
-  render() {
-    if (this.props.fetchingInitialState) return null
-
+  render () {
     const { title, errorText, cardSection } = styles
 
     return (
@@ -76,7 +74,7 @@ class StoreCredentials extends Component {
 
         <CardSection>
           <Input
-            placeholder="Entre com seu identificador MyDenox"
+            placeholder='Entre com seu identificador MyDenox'
             onChangeText={this.onUserIdChange.bind(this)}
             value={this.props.userId}
             keyboardType={'default'}
@@ -85,7 +83,7 @@ class StoreCredentials extends Component {
 
         <CardSection>
           <Input
-            placeholder="usuario@email.com.br"
+            placeholder='usuario@email.com.br'
             onChangeText={this.onEmailChange.bind(this)}
             value={this.props.email}
             keyboardType={'email-address'}
@@ -147,21 +145,13 @@ const buttonStyles = {
 }
 
 const mapStateToProps = state => {
-  const {
-    userId,
-    email,
-    error,
-    loading,
-    fetchingInitialState,
-    user
-  } = state.credentials
+  const { userId, email, error, loading, user } = state.credentials
 
   return {
     userId,
     email,
     error,
     loading,
-    fetchingInitialState,
     user
   }
 }

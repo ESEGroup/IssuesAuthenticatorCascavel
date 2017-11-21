@@ -1,8 +1,8 @@
 import React from 'react'
-import { Animated, Text, View } from 'react-native'
+import { Animated } from 'react-native'
 
 class SlideMenu extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -10,7 +10,7 @@ class SlideMenu extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.isMenuOpen) {
       Animated.timing(this.state.toggleMenu, {
         toValue: 0,
@@ -24,7 +24,7 @@ class SlideMenu extends React.Component {
     }
   }
 
-  render() {
+  render () {
     let { toggleMenu } = this.state
 
     return (

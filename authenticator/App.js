@@ -12,9 +12,12 @@ import thunk from 'redux-thunk'
 import SplashScreen from './src/components/pages/Splash'
 import HomeScreen from './src/components/pages/Home'
 import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
+import ConfigPreferencesScreen from './src/components/pages/ConfigPreferences'
 
-import credentialsReducer from './src/reducers/credentialsReducer'
-import userReducer from './src/reducers/userReducer'
+import credentialsReducer from './src/reducers/credentials'
+import userReducer from './src/reducers/user'
+import splashReducer from './src/reducers/splash'
+import preferencesReducer from './src/reducers/preferences'
 
 const { UIManager } = NativeModules
 
@@ -25,7 +28,8 @@ const AppNavigator = StackNavigator(
   {
     Splash: { screen: SplashScreen },
     Home: { screen: HomeScreen },
-    StoreCredentials: { screen: StoreCredentialsScreen }
+    StoreCredentials: { screen: StoreCredentialsScreen },
+    ConfigPreferences: { screen: ConfigPreferencesScreen }
   },
   {
     initialRouteName: 'Splash'
@@ -45,14 +49,16 @@ const navReducer = (state = initialState, action) => {
 const appReducer = combineReducers({
   nav: navReducer,
   credentials: credentialsReducer,
-  user: userReducer
+  user: userReducer,
+  splash: splashReducer,
+  preferences: preferencesReducer
 })
 
 class ReduxNavigation extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
   }
   onBackPress = () => {
@@ -64,7 +70,7 @@ class ReduxNavigation extends React.Component {
     return true
   }
 
-  render() {
+  render () {
     const { dispatch, nav } = this.props
     const navigation = addNavigationHelpers({ dispatch, state: nav })
 
@@ -81,7 +87,7 @@ const AppWithNavigationState = connect(mapStateToProps)(ReduxNavigation)
 const store = createStore(appReducer, applyMiddleware(thunk))
 
 export default class Root extends React.Component {
-  render() {
+  render () {
     return (
       <Provider store={store}>
         <AppWithNavigationState />

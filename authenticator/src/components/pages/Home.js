@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import {
-  Animated,
   View,
   Text,
-  StyleSheet,
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { NavigationActions } from 'react-navigation'
 
 import headerConfig from '../configs/header'
-import Card from '../common/Card'
-import CardSection from '../common/CardSection'
 import Button from '../common/Button'
 import Spinner from '../common/Spinner'
 import SlideMenu from '../SlideMenu'
@@ -24,7 +21,7 @@ import {
   registerUserLeave,
   changeSelectedLab,
   deleteUserInfo
-} from '../../actions/userActions'
+} from '../../actions/user'
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -35,9 +32,9 @@ class Home extends Component {
       headerLeft: (
         <TouchableOpacity onPress={() => params.handleOpenSideMenu()}>
           <Icon
-            name="menu"
+            name='menu'
             size={30}
-            color="#fff"
+            color='#fff'
             style={{ marginLeft: 10, marginRight: 0 }}
           />
         </TouchableOpacity>
@@ -45,7 +42,7 @@ class Home extends Component {
     }
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -53,13 +50,13 @@ class Home extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.navigation.setParams({
       handleOpenSideMenu: this.openSideMenu.bind(this)
     })
   }
 
-  openSideMenu() {
+  openSideMenu () {
     const isSideMenuOpen = this.state.isSideMenuOpen
 
     this.setState({
@@ -67,7 +64,7 @@ class Home extends Component {
     })
   }
 
-  onEnterButtonPress() {
+  onEnterButtonPress () {
     const {
       userId,
       selectedLabId,
@@ -76,25 +73,28 @@ class Home extends Component {
       registerUserEnter
     } = this.props
 
-    labs.filter(lab => lab.labId !== selectedLabId).forEach(lab => {
-      if (lab.present) {
-        registerUserLeave(userId, lab.labId)
-      }
+    const leaving = []
+    labs.filter(lab => lab.labId !== selectedLabId && lab.present).forEach(lab => {
+      leaving.push(registerUserLeave(userId, lab.labId))
     })
 
-    registerUserEnter(userId, selectedLabId)
+    Promise.all(leaving)
+      .then(() => {
+        registerUserEnter(userId, selectedLabId)
+      })
   }
-  onLeaveButtonPress() {
+  onLeaveButtonPress () {
     const { userId, selectedLabId, registerUserLeave } = this.props
 
     registerUserLeave(userId, selectedLabId)
   }
 
-  renderButton() {
+  renderButton () {
     const { enter, leave } = styles.buttonStyles
+    const { selectedLabId, loadingEnter, loadingLeave, labs } = this.props
 
-    if (!this.props.isInsideLab) {
-      if (this.props.isLoadingAuth) {
+    if (!labs.find(lab => lab.labId === selectedLabId).present) {
+      if (loadingEnter) {
         return (
           <Spinner
             backgroundStyles={enter.background}
@@ -114,7 +114,7 @@ class Home extends Component {
       )
     }
 
-    if (this.props.isLoadingAuth) {
+    if (loadingLeave) {
       return (
         <Spinner
           backgroundStyles={leave.background}
@@ -134,12 +134,18 @@ class Home extends Component {
     )
   }
 
-  render() {
-    const { userId, labs, selectedLabId, changeSelectedLab } = this.props
+  render () {
+    const {
+      userId,
+      labs,
+      selectedLabId,
+      changeSelectedLab,
+      deleteUserInfo
+    } = this.props
     const { isSideMenuOpen } = this.state
     const { containerView, textView, buttonView, slideMenu } = styles
 
-    if (selectedLabId === 'no-user') return null
+    if (!labs || !userId) return null
 
     return (
       <View style={containerView}>
@@ -163,6 +169,20 @@ class Home extends Component {
           </View>
 
           <View style={{ flex: 1, position: 'relative' }}>
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                top: 0,
+                paddingTop: 15,
+                paddingBottom: 15,
+                paddingLeft: 20,
+                paddingRight: 20
+              }}
+              onPress={() => this.props.navigation.dispatch(goToConfigPreferencesScreen)}
+            >
+              <Text style={{ color: '#444' }}>Configurar preferências ambientais</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity
               style={{
                 position: 'absolute',
@@ -208,7 +228,7 @@ class Home extends Component {
                       : 'radio-button-unchecked'
                   }
                   size={20}
-                  color="#FF9F00"
+                  color='#FF9F00'
                 />
                 <Text
                   style={{
@@ -311,16 +331,18 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  const { userId, isInsideLab, isLoadingAuth, labs, selectedLabId } = state.user
+  const { userId, loadingEnter, loadingLeave, labs, selectedLabId } = state.user
 
   return {
     userId,
-    isInsideLab,
-    isLoadingAuth,
+    loadingEnter,
+    loadingLeave,
     labs,
     selectedLabId
   }
 }
+
+const goToConfigPreferencesScreen = NavigationActions.navigate({ routeName: 'ConfigPreferences' })
 
 export default connect(mapStateToProps, {
   registerUserEnter,

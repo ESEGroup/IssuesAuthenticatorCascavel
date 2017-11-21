@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import headerConfig from '../configs/header'
 import { resetNavigation } from '../../utils'
-import { getInitialState } from '../../actions/credentialsActions'
+import { getInitialState } from '../../actions/splash'
 
 class Splash extends Component {
   static navigationOptions = {
@@ -12,31 +12,25 @@ class Splash extends Component {
     header: null
   }
 
-  componentWillMount() {
+  componentDidMount () {
     this.props.getInitialState()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.user) {
-      setTimeout(() => {
-        resetNavigation.call(this, 'Home')
-      }, 2000)
-    } else {
-      setTimeout(() => {
-        resetNavigation.call(this, 'StoreCredentials')
-      }, 2000)
+  componentDidUpdate (prevProps, prevState) {
+    if (!this.props.loadingUser) {
+      if (this.props.user) {
+        setTimeout(() => {
+          resetNavigation.call(this, 'Home')
+        }, 1500)
+      } else {
+        setTimeout(() => {
+          resetNavigation.call(this, 'StoreCredentials')
+        }, 1500)
+      }
     }
   }
 
-  resetNavigation(targetRoute) {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: targetRoute })]
-    })
-    this.props.navigation.dispatch(resetAction)
-  }
-
-  render() {
+  render () {
     const { container, image, text } = styles
 
     return (
@@ -71,9 +65,12 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  const { user } = state.credentials
+  const { user, loadingUser } = state.splash
 
-  return { user }
+  return {
+    user,
+    loadingUser
+  }
 }
 
 export default connect(mapStateToProps, { getInitialState })(Splash)
