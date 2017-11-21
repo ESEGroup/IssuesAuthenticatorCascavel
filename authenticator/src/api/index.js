@@ -39,8 +39,26 @@ const registerEnter = ({ userId, labId }) =>
     credentials: 'same-origin'
   })
 
+const updatePreferences = ({ userId, email, tempMin, tempMax, umidMin, umidMax }) =>
+  fetch(`${SERVER_URL}/atualizar_preferencias_authenticator`, {
+    method: 'POST',
+    body: JSON.stringify({
+      userId,
+      email,
+      tempMin,
+      tempMax,
+      umidMin,
+      umidMax
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'same-origin'
+  })
+
 export default {
   fetchUser,
   registerEnter,
-  registerExit
+  registerExit,
+  updatePreferences
 }
