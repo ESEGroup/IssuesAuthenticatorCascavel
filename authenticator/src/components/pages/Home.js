@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import { NavigationActions } from 'react-navigation'
 
 import headerConfig from '../configs/header'
 import Button from '../common/Button'
@@ -171,6 +172,20 @@ class Home extends Component {
             <TouchableOpacity
               style={{
                 position: 'absolute',
+                top: 0,
+                paddingTop: 15,
+                paddingBottom: 15,
+                paddingLeft: 20,
+                paddingRight: 20
+              }}
+              onPress={() => this.props.navigation.dispatch(goToConfigPreferencesScreen)}
+            >
+              <Text style={{ color: '#444' }}>Configurar preferências ambientais</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
                 bottom: 0,
                 paddingTop: 15,
                 paddingBottom: 15,
@@ -326,6 +341,8 @@ const mapStateToProps = state => {
     selectedLabId
   }
 }
+
+const goToConfigPreferencesScreen = NavigationActions.navigate({ routeName: 'ConfigPreferences' })
 
 export default connect(mapStateToProps, {
   registerUserEnter,

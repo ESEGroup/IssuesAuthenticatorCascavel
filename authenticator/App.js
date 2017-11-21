@@ -12,10 +12,12 @@ import thunk from 'redux-thunk'
 import SplashScreen from './src/components/pages/Splash'
 import HomeScreen from './src/components/pages/Home'
 import StoreCredentialsScreen from './src/components/pages/StoreCredentials'
+import ConfigPreferencesScreen from './src/components/pages/ConfigPreferences'
 
 import credentialsReducer from './src/reducers/credentials'
 import userReducer from './src/reducers/user'
 import splashReducer from './src/reducers/splash'
+import preferencesReducer from './src/reducers/preferences'
 
 const { UIManager } = NativeModules
 
@@ -26,7 +28,8 @@ const AppNavigator = StackNavigator(
   {
     Splash: { screen: SplashScreen },
     Home: { screen: HomeScreen },
-    StoreCredentials: { screen: StoreCredentialsScreen }
+    StoreCredentials: { screen: StoreCredentialsScreen },
+    ConfigPreferences: { screen: ConfigPreferencesScreen }
   },
   {
     initialRouteName: 'Splash'
@@ -47,7 +50,8 @@ const appReducer = combineReducers({
   nav: navReducer,
   credentials: credentialsReducer,
   user: userReducer,
-  splash: splashReducer
+  splash: splashReducer,
+  preferences: preferencesReducer
 })
 
 class ReduxNavigation extends React.Component {
