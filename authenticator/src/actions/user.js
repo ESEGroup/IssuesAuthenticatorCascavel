@@ -29,7 +29,7 @@ export const registerUserEnter = (userId, labId) => {
       .catch(() => {
         userRegisterFail(dispatch, USER_AUTH_ENTER_FAIL, labId)
 
-        return Promise.resolve('done')
+        return Promise.reject(new Error('failed'))
       })
   }
 }
@@ -51,7 +51,7 @@ export const registerUserLeave = (userId, labId) => {
       .catch(() => {
         userRegisterFail(dispatch, USER_AUTH_LEAVE_FAIL, labId)
 
-        return Promise.resolve('done')
+        return Promise.reject(new Error('failed'))
       })
   }
 }

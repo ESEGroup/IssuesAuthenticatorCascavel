@@ -25,16 +25,23 @@ export const validateUser = ({ userId, email }) => {
   return dispatch => {
     dispatch({ type: FETCH_USER_PENDING })
 
-    API.fetchUser({ userId, email })
+    return API.fetchUser({ userId, email })
       .then(res => res.json())
       .then(res => {
         if (res.erro) {
-          return validateUserFail(dispatch, res.erro)
+          validateUserFail(dispatch, res.erro)
+
+          return Promise.reject(new Error('failed'))
         }
 
-        return validateUserSuccess(dispatch, res)
+        validateUserSuccess(dispatch, res)
+        return Promise.resolve('done')
       })
-      .catch(() => validateUserFail(dispatch, 'Ocorreu um erro inesperado.'))
+      .catch(() => {
+        validateUserFail(dispatch, 'Ocorreu um erro inesperado.')
+
+        return Promise.reject(new Error('failed'))
+      })
   }
 }
 
