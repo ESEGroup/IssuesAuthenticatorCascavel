@@ -1,7 +1,7 @@
 const geodist = require('geodist')
 
 export default class GPS {
-  getPosition() {
+  getPosition () {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, {
         enableHighAccuracy: true,
@@ -11,17 +11,17 @@ export default class GPS {
     })
   }
 
-  isInLabRadius(lab) {
+  isInLabRadius (lab) {
     return this.getPosition().then(position => {
-      const user = {
+      const userPosition = {
         lat: position.coords.latitude,
         lon: position.coords.longitude
       }
-      const lab = {
+      const labPosition = {
         lat: lab.latitude,
         lon: lab.longitude
       }
-      const distance = geodist(user, lab, {
+      const distance = geodist(userPosition, labPosition, {
         unit: 'meters',
         exact: true
       })
