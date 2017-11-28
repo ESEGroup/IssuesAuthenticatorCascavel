@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
 const buttonStyles = {
   text: {
     alignSelf: 'center',
-    color: '#fff',
+    color: '#FFF',
     fontSize: 16,
     fontWeight: '600',
     paddingTop: 10,
@@ -209,7 +209,7 @@ const buttonStyles = {
     marginRight: 5
   },
   spinner: {
-    color: '#fff'
+    color: '#FFF'
   }
 }
 
