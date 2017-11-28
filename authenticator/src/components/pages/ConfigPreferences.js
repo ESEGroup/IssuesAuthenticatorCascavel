@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, Slider } from 'react-native'
 import { connect } from 'react-redux'
+import { HeaderBackButton } from 'react-navigation'
 
 import headerConfig from '../configs/header'
 import Card from '../common/Card'
@@ -23,9 +24,11 @@ import {
 } from '../../actions/credentials'
 
 class ConfigPreferences extends Component {
-  static navigationOptions = {
-    ...headerConfig,
-    headerLeft: null
+  static navigationOptions = ({ navigation }) => {
+    return {
+      ...headerConfig,
+      headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} tintColor={'#FFF'} />
+    }
   }
 
   componentDidMount () {
@@ -64,7 +67,7 @@ class ConfigPreferences extends Component {
         textStyle={text}
         onPress={this.onButtonPress.bind(this)}
       >
-        Configurar Preferências
+        SALVAR PREFERÊNCIAS
       </Button>
     )
   }
@@ -88,6 +91,8 @@ class ConfigPreferences extends Component {
             step={1}
             style={slider}
             onValueChange={(value) => preferencesTempChanged({ min: value, max: sliderTemp.max })}
+            thumbTintColor={'#FF9F00'}
+            maximumTrackTintColor={'#FF9F00'}
           />
           <Text style={sliderValue}>{sliderTemp.min}</Text>
         </CardSection>
@@ -101,6 +106,8 @@ class ConfigPreferences extends Component {
             step={1}
             style={slider}
             onValueChange={(value) => preferencesTempChanged({ min: sliderTemp.min, max: value })}
+            thumbTintColor={'#FF9F00'}
+            maximumTrackTintColor={'#FF9F00'}
           />
           <Text style={sliderValue}>{sliderTemp.max}</Text>
         </CardSection>
@@ -115,6 +122,8 @@ class ConfigPreferences extends Component {
             step={1}
             style={slider}
             onValueChange={(value) => preferencesUmidChanged({ min: value, max: sliderUmid.max })}
+            thumbTintColor={'#FF9F00'}
+            maximumTrackTintColor={'#FF9F00'}
           />
           <Text style={sliderValue}>{sliderUmid.min}</Text>
         </CardSection>
@@ -128,6 +137,8 @@ class ConfigPreferences extends Component {
             step={1}
             style={slider}
             onValueChange={(value) => preferencesUmidChanged({ min: sliderUmid.min, max: value })}
+            thumbTintColor={'#FF9F00'}
+            maximumTrackTintColor={'#FF9F00'}
           />
           <Text style={sliderValue}>{sliderUmid.max}</Text>
         </CardSection>
@@ -159,7 +170,8 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   slider: {
-    width: 250
+    width: 250,
+    height: 25
   },
   sliderValue: {
     fontSize: 12,

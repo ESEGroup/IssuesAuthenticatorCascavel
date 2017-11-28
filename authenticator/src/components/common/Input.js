@@ -7,7 +7,9 @@ const Input = ({
   value,
   placeholder,
   onChangeText,
-  keyboardType
+  keyboardType,
+  selectionColor,
+  underlineColorAndroid
 }) => {
   const { inputStyle, containerStyle } = styles
 
@@ -21,6 +23,8 @@ const Input = ({
         style={inputStyle}
         secureTextEntry={secure}
         keyboardType={keyboardType}
+        selectionColor={selectionColor}
+        underlineColorAndroid={underlineColorAndroid}
       />
     </View>
   )
