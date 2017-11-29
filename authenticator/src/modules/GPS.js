@@ -5,8 +5,7 @@ export default class GPS {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject, {
         enableHighAccuracy: true,
-        timeout: 10 * 1000,
-        maximumAge: 60 * 1000
+        timeout: 20 * 1000
       })
     })
   }
