@@ -13,6 +13,7 @@
     "geodist": "^0.2.1",
     "react": "16.0.0-beta.5",
     "react-native": "0.49.5",
+    "react-native-android-location": "^1.0.2",
     "react-native-android-wifi": "0.0.20",
     "react-native-background-task": "^0.2.1",
     "react-native-material-ui": "^1.14.0",
