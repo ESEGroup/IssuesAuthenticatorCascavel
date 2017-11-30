@@ -50,7 +50,7 @@ class Home extends Component {
     }
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     this.props.navigation.setParams({
       handleOpenSideMenu: this.openSideMenu.bind(this)
     })
@@ -338,7 +338,8 @@ const mapStateToProps = state => {
     loadingEnter,
     loadingLeave,
     labs,
-    selectedLabId
+    selectedLabId,
+    user: state.user
   }
 }
 

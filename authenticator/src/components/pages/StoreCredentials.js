@@ -60,7 +60,7 @@ class StoreCredentials extends Component {
         backgroundStyle={background}
         textStyle={text}
       >
-        Associar Dados
+        ASSOCIAR DADOS
       </Button>
     )
   }
@@ -78,15 +78,19 @@ class StoreCredentials extends Component {
             onChangeText={this.onUserIdChange.bind(this)}
             value={this.props.userId}
             keyboardType={'default'}
+            selectionColor={'#FF9F00'}
+            underlineColorAndroid={'#FF9F00'}
           />
         </CardSection>
 
         <CardSection>
           <Input
-            placeholder='usuario@email.com.br'
+            placeholder='Entre com seu email'
             onChangeText={this.onEmailChange.bind(this)}
             value={this.props.email}
             keyboardType={'email-address'}
+            selectionColor={'#FF9F00'}
+            underlineColorAndroid={'#FF9F00'}
           />
         </CardSection>
 
@@ -123,7 +127,7 @@ const styles = StyleSheet.create({
 const buttonStyles = {
   text: {
     alignSelf: 'center',
-    color: '#fff',
+    color: '#FFF',
     fontSize: 16,
     fontWeight: '600',
     paddingTop: 10,
@@ -140,7 +144,7 @@ const buttonStyles = {
     marginRight: 5
   },
   spinner: {
-    color: '#fff'
+    color: '#FFF'
   }
 }
 

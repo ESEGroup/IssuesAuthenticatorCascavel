@@ -1,7 +1,7 @@
 export default {
   title: 'Issues Authenticator',
   headerStyle: {
-    backgroundColor: '#0055b4'
+    backgroundColor: '#0055B4'
   },
   headerTitleStyle: {
     color: 'white',
