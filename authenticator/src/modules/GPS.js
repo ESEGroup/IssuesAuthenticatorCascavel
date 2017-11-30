@@ -1,9 +1,20 @@
 const geodist = require('geodist')
+const RNALocation = require('react-native-android-location')
+const { DeviceEventEmitter } = require('react-native')
 
 export default class GPS {
   getPosition () {
     return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject)
+      DeviceEventEmitter.addListener('updateLocation', (e) => {
+        resolve({
+          coords: {
+            latitude: e.Latitude,
+            longitude: e.Longitude
+          }
+        })
+      })
+
+      RNALocation.getLocation()
     })
   }
 
@@ -20,8 +31,6 @@ export default class GPS {
       unit: 'meters',
       exact: true
     })
-
-    console.log(distance)
 
     return distance <= 20
   }
