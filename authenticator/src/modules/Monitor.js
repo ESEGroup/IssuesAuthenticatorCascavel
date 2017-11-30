@@ -11,16 +11,10 @@ export default async (user) => {
   const position = await GPS.getPosition()
   const wifiList = await WiFi.getWifiList()
 
-  console.log(position)
-  console.log(wifiList)
-
   return Promise.all(
     labs.map(lab => {
       const { labId } = lab
       const isInsideGPS = GPS.isInLabRadius(lab, position)
-
-      console.log(labId)
-      console.log(isInsideGPS)
 
       if (isInsideGPS) {
         const isInsideWiFi = WiFi.isInLabRadius(lab, wifiList)

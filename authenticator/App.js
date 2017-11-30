@@ -80,7 +80,6 @@ class ReduxNavigation extends React.Component {
         await dispatch(validateUser({ userId, email }))
         BackgroundTask.finish()
       } catch (e) {
-        console.log(e)
         BackgroundTask.finish()
       }
     })
