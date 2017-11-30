@@ -14,10 +14,7 @@ import Spinner from '../common/Spinner'
 import SlideMenu from '../SlideMenu'
 
 import { USER_STATE } from '../../actions/types'
-import { resetNavigation, removeFromStorage, getFromStorage } from '../../utils'
-import API from '../../api'
-import { validateUser } from '../../actions/credentials'
-import Monitor from '../../modules/Monitor'
+import { resetNavigation, removeFromStorage } from '../../utils'
 
 import {
   registerUserEnter,
@@ -54,30 +51,9 @@ class Home extends Component {
   }
 
   async componentDidMount () {
-    const { validateUser } = this.props
-
     this.props.navigation.setParams({
       handleOpenSideMenu: this.openSideMenu.bind(this)
     })
-
-    try {
-      const userString = await getFromStorage(USER_STATE)
-      console.log(userString)
-
-      if (!userString) {
-        return
-      }
-      const { userId, email } = JSON.parse(userString)
-      const response = await API.fetchUser({ userId, email })
-      const fetchedUser = await response.json()
-
-      console.log(fetchedUser)
-
-      await Monitor(fetchedUser)
-      await validateUser({ userId, email })
-    } catch (e) {
-      console.log(e)
-    }
   }
 
   openSideMenu () {
@@ -373,6 +349,5 @@ export default connect(mapStateToProps, {
   registerUserEnter,
   registerUserLeave,
   changeSelectedLab,
-  deleteUserInfo,
-  validateUser
+  deleteUserInfo
 })(Home)
