@@ -9,22 +9,11 @@ export default class WiFi {
     })
   }
 
-  enableWifi () {
-    wifi.setEnabled(true)
-  }
+  isInLabRadius (lab, list) {
+    const scannedWifi = list.find(l => l.SSID === lab.ssid)
 
-  disableWifi () {
-    wifi.setEnabled(false)
-  }
+    if (!scannedWifi) return false
 
-  isInLabRadius (lab) {
-    return this.getWifiList()
-      .then(list => {
-        const scannedWifi = list.find(l => l.SSID === lab.ssid)
-
-        if (!scannedWifi) return false
-
-        return scannedWifi.level > -67
-      })
+    return scannedWifi.level > -67
   }
 }

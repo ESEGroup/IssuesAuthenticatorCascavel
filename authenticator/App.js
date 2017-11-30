@@ -8,6 +8,7 @@ import { BackHandler, NativeModules } from 'react-native'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import BackgroundTask from 'react-native-background-task'
 
 import SplashScreen from './src/components/pages/Splash'
 import HomeScreen from './src/components/pages/Home'
@@ -18,6 +19,12 @@ import credentialsReducer from './src/reducers/credentials'
 import userReducer from './src/reducers/user'
 import splashReducer from './src/reducers/splash'
 import preferencesReducer from './src/reducers/preferences'
+
+import Monitor from './src/modules/Monitor'
+import API from './src/api'
+import { validateUser } from './src/actions/credentials'
+import { USER_STATE } from './src/actions/types'
+import { getFromStorage } from './src/utils'
 
 const { UIManager } = NativeModules
 
@@ -55,8 +62,33 @@ const appReducer = combineReducers({
 })
 
 class ReduxNavigation extends React.Component {
+  componentWillMount () {
+    const { dispatch } = this.props
+
+    BackgroundTask.define(async () => {
+      try {
+        const userString = await getFromStorage(USER_STATE)
+
+        if (!userString) {
+          return BackgroundTask.finish()
+        }
+        const { userId, email } = JSON.parse(userString)
+        const response = await API.fetchUser({ userId, email })
+        const fetchedUser = await response.json()
+
+        await Monitor(fetchedUser)
+        await dispatch(validateUser({ userId, email }))
+        BackgroundTask.finish()
+      } catch (e) {
+        console.log(e)
+        BackgroundTask.finish()
+      }
+    })
+  }
+
   componentDidMount () {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
+    BackgroundTask.schedule({ period: 900 })
   }
   componentWillUnmount () {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
