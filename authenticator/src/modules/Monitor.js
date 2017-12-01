@@ -8,6 +8,12 @@ const GPS = new GPSModule()
 export default async (user) => {
   const { userId, labs } = user
 
+  const gpsEnabled = await GPS.isEnabled()
+
+  if (!gpsEnabled) {
+    return [null] // No change on BackgroundTask. Check App.js
+  }
+
   const position = await GPS.getPosition()
   const wifiList = await WiFi.getWifiList()
 
