@@ -7,7 +7,8 @@
     "test": "jest",
     "android-linux": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
     "build-apk": "cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/app-release.apk ../../releases/current/app-release.apk",
-    "eslint-fixall": "./node_modules/.bin/eslint --fix ."
+    "eslint-fixall": "./node_modules/.bin/eslint --fix .",
+    "debug-background-task": "adb logcat '*:S' ReactNative:V ReactNativeJS:V BackgroundTask:V"
   },
   "dependencies": {
     "geodist": "^0.2.1",
