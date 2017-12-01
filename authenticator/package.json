@@ -18,6 +18,7 @@
     "react-native-android-wifi": "0.0.20",
     "react-native-background-task": "^0.2.1",
     "react-native-material-ui": "^1.14.0",
+    "react-native-settings": "0.0.1-alpha5",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.15",
     "react-redux": "^5.0.6",
