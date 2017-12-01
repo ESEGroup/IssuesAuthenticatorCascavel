@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  DeviceEventEmitter
 } from 'react-native'
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { NavigationActions } from 'react-navigation'
+import RNSettings from 'react-native-settings'
 
 import headerConfig from '../configs/header'
 import Button from '../common/Button'
@@ -15,6 +17,7 @@ import SlideMenu from '../SlideMenu'
 
 import { USER_STATE } from '../../actions/types'
 import { resetNavigation, removeFromStorage } from '../../utils'
+import GPSModule from '../../modules/GPS'
 
 import {
   registerUserEnter,
@@ -22,6 +25,8 @@ import {
   changeSelectedLab,
   deleteUserInfo
 } from '../../actions/user'
+
+const GPS = new GPSModule()
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -46,14 +51,28 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      isSideMenuOpen: false
+      isSideMenuOpen: false,
+      isGPSEnabled: true
     }
+
+    DeviceEventEmitter.addListener(RNSettings.GPS_PROVIDER_EVENT, this.handleGPSProviderEvent.bind(this))
   }
 
   async componentDidMount () {
     this.props.navigation.setParams({
       handleOpenSideMenu: this.openSideMenu.bind(this)
     })
+
+    const isGPSEnabled = await GPS.isEnabled()
+    this.setState({ isGPSEnabled })
+  }
+
+  handleGPSProviderEvent (e) {
+    if (e[RNSettings.LOCATION_SETTING] === RNSettings.DISABLED) {
+      this.setState({ isGPSEnabled: false })
+    } else {
+      this.setState({ isGPSEnabled: true })
+    }
   }
 
   openSideMenu () {
@@ -83,6 +102,7 @@ class Home extends Component {
         registerUserEnter(userId, selectedLabId)
       })
   }
+
   onLeaveButtonPress () {
     const { userId, selectedLabId, registerUserLeave } = this.props
 
@@ -142,7 +162,7 @@ class Home extends Component {
       changeSelectedLab,
       deleteUserInfo
     } = this.props
-    const { isSideMenuOpen } = this.state
+    const { isSideMenuOpen, isGPSEnabled } = this.state
     const { containerView, textView, buttonView, slideMenu } = styles
 
     if (!labs || !userId) return null
@@ -206,6 +226,11 @@ class Home extends Component {
 
         <View style={textView}>
           <Text style={{ fontSize: 18 }}>Olá, {userId}</Text>
+          {
+            isGPSEnabled
+              ? null
+              : <Text style={{ fontSize: 16, color: 'red' }}>Ative sua localização para habilitar a autenticação automática.</Text>
+          }
           <Text style={{ fontSize: 16, marginTop: 10, marginBottom: 10 }}>
             Selecione o laboratório:
           </Text>
