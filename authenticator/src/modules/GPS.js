@@ -1,8 +1,15 @@
+import RNSettings from 'react-native-settings'
 const geodist = require('geodist')
 const RNALocation = require('react-native-android-location')
 const { DeviceEventEmitter } = require('react-native')
 
 export default class GPS {
+  async isEnabled () {
+    const result = await RNSettings.getSetting(RNSettings.LOCATION_SETTING)
+
+    return result === RNSettings.ENABLED
+  }
+
   getPosition () {
     return new Promise((resolve, reject) => {
       DeviceEventEmitter.addListener('updateLocation', (e) => {
