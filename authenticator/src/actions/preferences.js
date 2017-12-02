@@ -31,13 +31,15 @@ export const registerUserPreferences = ({ userId, email, tempMin, tempMax, umidM
         if (res.erro) {
           registerPreferencesFail(dispatch, res.erro)
 
-          return Promise.reject(new Error('failed'))
+          return Promise.reject(new Error('issues-failed'))
         }
 
         return Promise.resolve('done')
       })
-      .catch(() => {
-        registerPreferencesFail(dispatch, 'Ocorreu um erro inesperado.')
+      .catch((e) => {
+        if (e.message !== 'issues-failed') {
+          registerPreferencesFail(dispatch, 'Ocorreu um erro inesperado.')
+        }
 
         return Promise.reject(new Error('failed'))
       })

@@ -31,14 +31,16 @@ export const validateUser = ({ userId, email }) => {
         if (res.erro) {
           validateUserFail(dispatch, res.erro)
 
-          return Promise.reject(new Error('failed'))
+          return Promise.reject(new Error('issues-failed'))
         }
 
         validateUserSuccess(dispatch, res)
         return Promise.resolve('done')
       })
-      .catch(() => {
-        validateUserFail(dispatch, 'Ocorreu um erro inesperado.')
+      .catch((e) => {
+        if (e.message !== 'issues-failed') {
+          validateUserFail(dispatch, 'Ocorreu um erro inesperado.')
+        }
 
         return Promise.reject(new Error('failed'))
       })

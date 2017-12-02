@@ -7,7 +7,8 @@
     "test": "jest",
     "android-linux": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
     "build-apk": "cd android && ./gradlew assembleRelease && cp app/build/outputs/apk/app-release.apk ../../releases/current/app-release.apk",
-    "eslint-fixall": "./node_modules/.bin/eslint --fix ."
+    "eslint-fixall": "./node_modules/.bin/eslint --fix .",
+    "debug-background-task": "adb logcat '*:S' ReactNative:V ReactNativeJS:V BackgroundTask:V"
   },
   "dependencies": {
     "geodist": "^0.2.1",
@@ -17,6 +18,7 @@
     "react-native-android-wifi": "0.0.20",
     "react-native-background-task": "^0.2.1",
     "react-native-material-ui": "^1.14.0",
+    "react-native-settings": "0.0.1-alpha5",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.15",
     "react-redux": "^5.0.6",

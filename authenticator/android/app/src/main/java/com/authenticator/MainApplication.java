@@ -3,6 +3,7 @@ package com.authenticator;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.rumors.reactnativesettings.RNSettingsPackage;
 import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.devstepbcn.wifi.AndroidWifiPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSettingsPackage(),
             new BackgroundTaskPackage(),
             new AndroidWifiPackage(),
             new VectorIconsPackage(),

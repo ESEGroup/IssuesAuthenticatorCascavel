@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-settings')
     compile project(':react-native-background-task')
     compile project(':react-native-android-wifi')
     compile project(':react-native-vector-icons')
