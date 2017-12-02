@@ -20,7 +20,7 @@ import userReducer from './src/reducers/user'
 import splashReducer from './src/reducers/splash'
 import preferencesReducer from './src/reducers/preferences'
 
-import Monitor from './src/modules/Monitor'
+import MonitorModule from './src/modules/Monitor'
 import API from './src/api'
 import { USER_STATE, FETCH_USER_SUCCESS } from './src/actions/types'
 import { getFromStorage } from './src/utils'
@@ -64,16 +64,24 @@ const store = createStore(appReducer, applyMiddleware(thunk))
 
 BackgroundTask.define(async () => {
   try {
+    const Monitor = new MonitorModule()
+    const shouldAuthenticateUser = await Monitor.shouldAuthenticateUser()
+
+    if (!shouldAuthenticateUser) {
+      return BackgroundTask.finish()
+    }
+
     const userString = await getFromStorage(USER_STATE)
 
     if (!userString) {
       return BackgroundTask.finish()
     }
+
     const { userId, email } = JSON.parse(userString)
     const response = await API.fetchUser({ userId, email })
     const fetchedUser = await response.json()
 
-    const responses = await Monitor(fetchedUser)
+    const responses = await Monitor.authenticateUser(fetchedUser)
     const noChange = responses.reduce((prev, cur) => prev && (cur === null), true)
 
     if (noChange) {
