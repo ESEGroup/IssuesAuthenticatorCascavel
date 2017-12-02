@@ -2,41 +2,44 @@ import WiFiModule from './WiFi'
 import GPSModule from './GPS'
 import API from '../api'
 
-const WiFi = new WiFiModule()
-const GPS = new GPSModule()
-
-export default async (user) => {
-  const { userId, labs } = user
-
-  const gpsEnabled = await GPS.isEnabled()
-
-  if (!gpsEnabled) {
-    return [null] // No change on BackgroundTask. Check App.js
+export default class Monitor {
+  constructor () {
+    this.GPS = new GPSModule()
+    this.WiFi = new WiFiModule()
   }
 
-  const position = await GPS.getPosition()
-  const wifiList = await WiFi.getWifiList()
+  async shouldAuthenticateUser () {
+    return this.GPS.isEnabled()
+  }
 
-  return Promise.all(
-    labs.map(lab => {
-      const { labId } = lab
-      const isInsideGPS = GPS.isInLabRadius(lab, position)
+  async authenticateUser (user) {
+    const { userId, labs } = user
+    const { GPS, WiFi } = this
 
-      if (isInsideGPS) {
-        const isInsideWiFi = WiFi.isInLabRadius(lab, wifiList)
+    const position = await GPS.getPosition()
+    const wifiList = await WiFi.getWifiList()
 
-        if (isInsideWiFi) {
-          return lab.present
-            ? null
-            : API.registerEnter({ userId, labId })
+    return Promise.all(
+      labs.map(lab => {
+        const { labId } = lab
+        const isInsideGPS = GPS.isInLabRadius(lab, position)
+
+        if (isInsideGPS) {
+          const isInsideWiFi = WiFi.isInLabRadius(lab, wifiList)
+
+          if (isInsideWiFi) {
+            return lab.present
+              ? null
+              : API.registerEnter({ userId, labId })
+          }
+
+          return null
         }
 
-        return null
-      }
-
-      return lab.present
-        ? API.registerExit({ userId, labId })
-        : null
-    })
-  )
+        return lab.present
+          ? API.registerExit({ userId, labId })
+          : null
+      })
+    )
+  }
 }
