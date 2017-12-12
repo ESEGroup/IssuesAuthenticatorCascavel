@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+	<testplan>
+		<name><![CDATA[Issues Authenticator Cascavel]]></name>
+		
+		
+<executables>
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Autenticação Válida]]></name>
+			<externalid><![CDATA[71]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10000]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Autenticação Inválida por usuário inexistente no Issues Monitoring]]></name>
+			<externalid><![CDATA[72]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10010]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Autenticação Inválida por usuário inexistente no MyDenox]]></name>
+			<externalid><![CDATA[73]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10020]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Autenticação Inválida  por erro no identificador MyDenox]]></name>
+			<externalid><![CDATA[74]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10030]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Autenticação Inválida por erro de e-mail]]></name>
+			<externalid><![CDATA[75]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10040]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Registro de Entrada do Laboratório]]></name>
+			<externalid><![CDATA[76]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10050]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Registro de Saída do Laboratório]]></name>
+			<externalid><![CDATA[77]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10060]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Desassociação de Dados de Autorização com sucesso]]></name>
+			<externalid><![CDATA[78]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10070]]></execution_order>
+		</testcase>
+</link>
+
+	<link>
+		<platform>
+			<name><![CDATA[]]></name>
+		</platform>
+		<testcase>
+			<name><![CDATA[Registro de Preferências Ambientais]]></name>
+			<externalid><![CDATA[79]]></externalid>
+			<version><![CDATA[1]]></version>
+			<execution_order><![CDATA[10080]]></execution_order>
+		</testcase>
+</link>
+
+</executables>
+
+	</testplan>
