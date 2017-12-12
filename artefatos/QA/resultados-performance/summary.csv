@@ -1,0 +1,4 @@
+Rótulo,# Amostras,Média,Mín.,Máx.,Desvio Padrão,% de Erro,Vazão,KB/s,Sent KB/sec,Média de Bytes
+registrar_entrada_authenticator,30,292,272,311,"8,25","0,000%",",51463","0,10","0,12","198,0"
+atualizar_preferencias_authenticator,20,295,272,321,"12,34","0,000%",",34912","0,08","0,12","220,0"
+TOTAL,50,294,272,321,"10,20","0,000%",",85772","0,17","0,24","206,8"

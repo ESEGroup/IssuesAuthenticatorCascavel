@@ -1,3 +1,4 @@
+Rótulo,# Amostras,Média,Mediana,90% Line,95% Line,99% Line,Mín.,Máx.,% de Erro,Vazão,KB/s,Sent KB/sec
 registrar_entrada_authenticator,30,292,291,302,304,311,272,311,"0,000%",",51463","0,10","0,12"
 atualizar_preferencias_authenticator,20,295,298,307,311,321,272,321,"0,000%",",34912","0,08","0,12"
 TOTAL,50,294,293,307,307,321,272,321,"0,000%",",85772","0,17","0,24"
