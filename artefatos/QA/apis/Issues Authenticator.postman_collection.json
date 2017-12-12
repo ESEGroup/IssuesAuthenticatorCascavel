@@ -1,0 +1,138 @@
+{
+	"info": {
+		"name": "Issues Authenticator",
+		"_postman_id": "1e08835e-ad40-2cef-2dd9-a69fae3aaa25",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "validar_usuario_authenticator",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":\"preis\",\n\t\"email\":\"pedroreis@poli.ufrj.br\"\n}"
+				},
+				"url": {
+					"raw": "http://165.227.121.222:5000/validar_usuario_authenticator",
+					"protocol": "http",
+					"host": [
+						"165",
+						"227",
+						"121",
+						"222"
+					],
+					"port": "5000",
+					"path": [
+						"validar_usuario_authenticator"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "registrar_saida_authenticator",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":\"preis\",\n\t\"labId\":\"LCG\"\n}"
+				},
+				"url": {
+					"raw": "http://165.227.121.222:5000/registrar_saida_authenticator",
+					"protocol": "http",
+					"host": [
+						"165",
+						"227",
+						"121",
+						"222"
+					],
+					"port": "5000",
+					"path": [
+						"registrar_saida_authenticator"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "registrar_entrada_authenticator",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":\"preis\",\n\t\"labId\":1\n}"
+				},
+				"url": {
+					"raw": "http://165.227.121.222:5000/registrar_entrada_authenticator",
+					"protocol": "http",
+					"host": [
+						"165",
+						"227",
+						"121",
+						"222"
+					],
+					"port": "5000",
+					"path": [
+						"registrar_entrada_authenticator"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar_preferencias_authenticator",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":\"preis\",\n\t\"email\":\"pedroreis@poli.ufrj.br\",\n\t\"tempMin\":\"0\",\n\t\"tempMax\":\"20\",\n\t\"umidMin\":\"0\",\n\t\"umidMax\":\"20\"\n}"
+				},
+				"url": {
+					"raw": "http://165.227.121.222:5000/atualizar_preferencias_authenticator",
+					"protocol": "http",
+					"host": [
+						"165",
+						"227",
+						"121",
+						"222"
+					],
+					"port": "5000",
+					"path": [
+						"atualizar_preferencias_authenticator"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
